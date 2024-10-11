@@ -1,0 +1,10 @@
+.user-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 7%;
+    gap: 30%;
+    size: 16px;
+    color: #333333AD;
+    cursor: pointer;
+}
