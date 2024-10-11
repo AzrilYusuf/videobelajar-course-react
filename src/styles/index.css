@@ -28,25 +28,6 @@ p {
     height: 100vh;
 }
 
-.navbar {
-    grid-area: navbar;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #ffffff;
-    padding: 12px, 120px, 12px, 120px;
-    border: 0, 0, 1px, 0;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 237px;
-    height: 56px;
-    margin-left: 7%;
-}
-
 /** Auth page */
 .form-content {
     grid-area: form;
@@ -212,17 +193,6 @@ a {
     height: 100%;
     background-color: #FCF8CA;
     row-gap: 64px;
-}
-
-.user-logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 7%;
-    gap: 30%;
-    size: 16px;
-    color: #333333AD;
-    cursor: pointer;
 }
 
 .tagline-container {
