@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./styles/App.css";
-import RegisterPage from "./pages/register";
+import RegisterPage from "./pages/Register";
 
 const router = createBrowserRouter([
   {
