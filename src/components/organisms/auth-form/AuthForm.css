@@ -1,0 +1,202 @@
+/** Desktop first */
+.register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    height: 98%;
+    background-color: #ffffff;
+    gap: 20px;
+    border: 1px;
+    border-radius: 4px;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 55%;
+    gap: 10px;
+}
+
+label {
+    font-size: 16px;
+    color: #333333AD;
+}
+
+.red-color {
+    color: red;
+}
+
+input {
+    height: 35px;
+    padding: 2px 8px;
+    border: 1px solid #e3e3e3;
+    border-radius: 8px;
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    color: #222325;
+}
+
+input:focus {
+    outline: none;
+}
+
+#password {
+    position: relative;
+}
+
+#togglePassword {
+    position: absolute;
+    right: 33%;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#togglePassword:focus {
+    outline: none;
+}
+
+#confirmPassword {
+    position: relative;
+}
+
+#toggleConfirmPassword {
+    position: absolute;
+    right: 33%;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#toggleConfirmPassword:focus {
+    outline: none;
+}
+
+.pnumber-select {
+    display: flex;
+    gap: 24px;
+}
+
+#phoneNumber {
+    height: 40px;
+    padding: 2px 8px;
+    border: 1px solid #e3e3e3;
+    border-radius: 6px;
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    color: #222325;
+}
+
+#phoneNumber:focus {
+    outline: none;
+}
+
+.forgot-password {
+    margin-left: auto;
+    margin-top: 5px;
+    font-size: 16px;
+    color: #333333AD;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    color: #38bb45;
+}
+
+.authentication-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+}
+
+.button {
+    width: 100%;
+    height: 40px;
+    padding: 10px 26px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+.line-container {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #333333AD;
+}
+
+.google-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    /* padding-bottom: 10px; */
+    background-color: #FFFFFF;
+    color: #333333AD;
+    gap: 8px;
+    border: 1px solid #e3e3e3;
+}
+
+.google-button:hover {
+    background-color: #eeeeee;
+}
+
+.authentication-button {
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.register-button {
+    background-color: #3ECF4C;
+}
+
+.register-button a {
+    color: #FFFFFF;
+}
+
+.register-button:hover{
+    background-color: #38bb45;
+}
+
+.register-button:active{
+    background-color: #3ECF4C;
+}
+
+.login-button {
+    background-color: #E2FCD9CC;
+}
+
+.login-button a {
+    color: #3ECF4C;
+}
+
+.login-button:hover{
+    background-color: #d5eecdcc;
+}
+
+.login-button:active{
+    background-color: #E2FCD9CC;
+}
+
+/** Mobile screen */
+@media (max-width: 480px) {
+    .register {
+        width: 90%;
+    }
+
+    .authentication-button {
+        margin-top: 10px;
+    }
+}
