@@ -16,6 +16,8 @@ const AuthButton: React.FC<{ title: string }> = ({ title }) => {
       navigate("/");
     } else if (destination === "login") {
       navigate("/login");
+    } else if (destination === "register") {
+      navigate("/register")
     }
   };
 
