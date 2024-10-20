@@ -1,15 +1,9 @@
 import React from "react";
+import { InputProps } from "../../interfaces/interfaces";
 
-interface Props {
-  id: string;
-  type: string;
-  name: string;
-  handleChange: React.ChangeEventHandler<HTMLInputElement>; // Define the type for handleChange
-}
-
-const Input: React.FC<Props> = ({ id, type, name, handleChange }) => {
+const Input: React.FC<InputProps> = ({ id, type, name, style, handleChange }) => {
   return (
-    <input id={id} type={type} name={name} onChange={handleChange} required />
+    <input id={id} type={type} name={name} style={style} onChange={handleChange} required />
   );
 };
 

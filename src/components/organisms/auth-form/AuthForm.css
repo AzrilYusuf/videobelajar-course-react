@@ -98,7 +98,6 @@ input:focus {
 
 .forgot-password {
     margin-left: auto;
-    margin-top: 5px;
     font-size: 16px;
     color: #333333AD;
     text-decoration: none;
@@ -108,7 +107,7 @@ input:focus {
     color: #38bb45;
 }
 
-.authentication-button {
+.auth-button {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -153,40 +152,34 @@ a {
     background-color: #eeeeee;
 }
 
-.authentication-button {
+.auth-button {
     margin-top: 10px;
     gap: 10px;
 }
 
-.register-button {
+.auth-button-1 {
     background-color: #3ECF4C;
-}
-
-.register-button a {
     color: #FFFFFF;
 }
 
-.register-button:hover{
+.auth-button-1:hover{
     background-color: #38bb45;
 }
 
-.register-button:active{
+.auth-button-1:active{
     background-color: #3ECF4C;
 }
 
-.login-button {
+.auth-button-2 {
     background-color: #E2FCD9CC;
-}
-
-.login-button a {
     color: #3ECF4C;
 }
 
-.login-button:hover{
+.auth-button-2:hover{
     background-color: #d5eecdcc;
 }
 
-.login-button:active{
+.auth-button-2:active{
     background-color: #E2FCD9CC;
 }
 
@@ -196,7 +189,7 @@ a {
         width: 90%;
     }
 
-    .authentication-button {
+    .auth-button {
         margin-top: 10px;
     }
 }
