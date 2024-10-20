@@ -10,7 +10,9 @@ const RegisterPage: React.FC = () => {
   return (
     <div className="auth-container">
       <Navbar />
-      <AuthForm />
+      <section className="form-content">
+        <AuthForm title="register" />
+      </section>
     </div>
   );
 };
