@@ -2,13 +2,13 @@ import React from "react";
 
 interface Props {
   htmlFor: string;
-  value: string;
+  children: string;
 }
 
-const Label: React.FC<Props> = ({ htmlFor, value }) => {
+const Label: React.FC<Props> = ({ htmlFor, children }) => {
   return (
     <label htmlFor={htmlFor}>
-      {value} <span className="red-color">&lowast;</span>
+      {children} <span className="red-color">&lowast;</span>
     </label>
   );
 };

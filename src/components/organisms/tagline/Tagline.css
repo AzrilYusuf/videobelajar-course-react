@@ -1,0 +1,60 @@
+.tagline-container {
+    grid-area: tagline;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0 120px;
+}
+
+.tagline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(#000000CC, #000000CC),
+        url('https://s3-alpha-sig.figma.com/img/65ed/b9e6/d25fa2121b31a4ad14c9ebd02127f629?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=TQnv9W0ES-hgKXIR1RRjo4P1Mc-lhoRaRAWKgOMade3dHt63eZmu2GbF4W9G3y3ysA8B9L95DLaxTP5gumdRXsPJ7fblZwoUc16qxea5xh1CmhsZLtiWx9NIi7301PQ5UFh~ZEee1Sb1bqHQ7QKzO3ydOsD1uuumMRIX2lnPfRU4fKZPicZCp3YwGHtZfrldPs~gmcWyLFqiJapM9gGzueHZ4bBCnXmzq-1Fma6U-c8IBwWM553y9WzfRL3rlz1rztzT-4DbGEWbuDkQ5r50eJPWjdWwNKq64RrK5MMGPFQas4eSaPERLpxoSUv83Z6Dj0eskFhtWK7RYfAEj9xvaQ__');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 65%;
+    padding: 82px 140px 64px 140px;
+    border-radius: 10px;
+    text-align: center;
+    gap: 12px;
+}
+
+.tagline h1 {
+    font-weight: 700;
+    font-size: 48px;
+    color: #ffff;
+    line-height: 52.8px;
+}
+
+.tagline p {
+    color: #ffff;
+    line-height: 22.4px;
+    letter-spacing: 0.2px
+}
+
+.success-button {
+    width: 40%;
+    height: 42px;
+    padding: 10px 26px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    background-color: #3ECF4C;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.success-button:hover {
+    background-color: #3ac448;
+}
+
+.success-button:active {
+    background-color: #6BE26B;
+}

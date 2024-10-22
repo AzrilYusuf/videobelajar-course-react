@@ -24,7 +24,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
     {
       key: 1,
       htmlFor: "",
-      labelValue: "",
+      labelChildren: "",
       id: "",
       inputType: "",
       inputName: "",
@@ -40,7 +40,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
         {
           key: 1,
           htmlFor: "fullname",
-          labelValue: "Nama Lengkap",
+          labelChildren: "Nama Lengkap",
           id: "fullname",
           inputType: "text",
           inputName: "fullname",
@@ -51,7 +51,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
         {
           key: 2,
           htmlFor: "email",
-          labelValue: "E-mail",
+          labelChildren: "E-mail",
           id: "email",
           inputType: "email",
           inputName: "email",
@@ -62,7 +62,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
         {
           key: 3,
           htmlFor: "mobile",
-          labelValue: "Nomor HP",
+          labelChildren: "Nomor HP",
           id: "phoneNumber",
           inputType: "text",
           inputName: "phone_number",
@@ -73,7 +73,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
         {
           key: 4,
           htmlFor: "password",
-          labelValue: "Password",
+          labelChildren: "Password",
           id: "password",
           inputType: "password",
           inputName: "password",
@@ -84,7 +84,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
         {
           key: 5,
           htmlFor: "confirm_password",
-          labelValue: "Confirm Password",
+          labelChildren: "Confirm Password",
           id: "confirmPassword",
           inputType: "password",
           inputName: "confirm_password",
@@ -98,7 +98,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
         {
           key: 1,
           htmlFor: "email",
-          labelValue: "E-mail",
+          labelChildren: "E-mail",
           id: "email",
           inputType: "email",
           inputName: "email",
@@ -109,7 +109,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
         {
           key: 2,
           htmlFor: "password",
-          labelValue: "Password",
+          labelChildren: "Password",
           id: "password",
           inputType: "password",
           inputName: "password",
@@ -131,7 +131,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           <InputForm
             key={form.key}
             htmlFor={form.htmlFor}
-            labelValue={form.labelValue}
+            labelChildren={form.labelChildren}
             id={form.id}
             inputType={form.inputType}
             inputName={form.inputName}

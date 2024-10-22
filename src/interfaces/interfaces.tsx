@@ -18,7 +18,7 @@ export interface ButtonProps {
 export interface FormTypes {
   key: number;
   htmlFor: string;
-  labelValue: string;
+  labelChildren: string;
   id: string;
   inputType: string;
   inputName: string;
@@ -34,4 +34,16 @@ export interface FormValues {
   phone_number: string;
   password: string;
   confirm_password: string;
+}
+
+export interface Cards {
+  id: number;
+  image: string;
+  title: string;
+  description: string;
+  tutorImage: string;
+  tutorName: string;
+  tutorPosition: string;
+  rating: string;
+  price: string;
 }
