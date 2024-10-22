@@ -8,7 +8,7 @@ import ToggleHide from "../../../assets/svg/toggle-hide.svg";
 
 const InputForm: React.FC<FormTypes> = ({
   htmlFor,
-  labelValue,
+  labelChildren,
   id,
   inputType,
   inputName,
@@ -24,7 +24,7 @@ const InputForm: React.FC<FormTypes> = ({
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <Label htmlFor={htmlFor} value={labelValue} />
+      <Label htmlFor={htmlFor} children={labelChildren} />
       <div style={{ display: "flex", alignItems: "center" }}>
         {isSelect === true ? (
           <div className="pnumber-select" style={{ width: "100%" }}>
