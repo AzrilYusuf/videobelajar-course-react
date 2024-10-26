@@ -4,6 +4,7 @@ export interface InputProps {
   type: string;
   name: string;
   style?: React.CSSProperties;
+  placeholder?: string;
   handleChange: React.ChangeEventHandler<HTMLInputElement>; // Define the type for handleChange
 }
 
@@ -24,7 +25,15 @@ export interface FormTypes {
   inputName: string;
   isSelect?: boolean;
   toggleHide?: boolean;
+  placeholder?: string;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
+}
+
+export interface FooterList {
+  target: string;
+  pChildren: React.ReactNode;
+  id: string;
+  ulChildren: React.ReactNode;
 }
 
 // Used in organism
@@ -36,6 +45,7 @@ export interface FormValues {
   confirm_password: string;
 }
 
+// Used in organism
 export interface Cards {
   id: number;
   image: string;

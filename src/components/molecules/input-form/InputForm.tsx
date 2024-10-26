@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import { FormTypes } from "../../../interfaces/interfaces";
 import Label from "../../atoms/Label";
 import Input from "../../atoms/Input";
 import Image from "../../atoms/Image";
-import { FormTypes } from "../../../interfaces/interfaces";
 import ToggleShow from "../../../assets/svg/toggle-show.svg";
 import ToggleHide from "../../../assets/svg/toggle-hide.svg";
 
@@ -14,6 +14,7 @@ const InputForm: React.FC<FormTypes> = ({
   inputName,
   isSelect,
   toggleHide,
+  placeholder,
   handleChange,
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -39,6 +40,7 @@ const InputForm: React.FC<FormTypes> = ({
               type={inputType}
               name={inputName}
               style={{ width: "100%" }}
+              placeholder={placeholder}
               handleChange={handleChange}
             />
           </div>
@@ -50,6 +52,7 @@ const InputForm: React.FC<FormTypes> = ({
             }
             name={inputName}
             style={{ flex: "1" }}
+            placeholder={placeholder}
             handleChange={handleChange}
           />
         )}

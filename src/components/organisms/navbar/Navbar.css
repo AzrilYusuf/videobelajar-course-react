@@ -7,3 +7,15 @@
     padding: 12px, 120px, 12px, 120px;
     border: 0, 0, 1px, 0;
 }
+
+/** Mobile screen */
+@media (max-width: 480px) {
+    .navbar {
+        padding: 16px, 24px, 16px, 24px;
+    }
+
+    .logo {
+        width: 144.77px;
+        height: 22.56px;
+    }
+}

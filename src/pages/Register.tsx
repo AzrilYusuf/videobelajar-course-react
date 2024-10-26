@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Navbar from "../components/organisms/navbar/Navbar";
+import AuthLayout from "../components/templates/AuthLayout";
 import AuthForm from "../components/organisms/auth-form/AuthForm";
 
 const RegisterPage: React.FC = () => {
@@ -8,12 +8,9 @@ const RegisterPage: React.FC = () => {
   });
 
   return (
-    <div className="auth-container">
-      <Navbar />
-      <section className="form-content">
-        <AuthForm title="register" />
-      </section>
-    </div>
+    <AuthLayout>
+      <AuthForm title="register" />
+    </AuthLayout>
   );
 };
 

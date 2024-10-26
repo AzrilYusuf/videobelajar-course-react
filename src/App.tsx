@@ -6,6 +6,10 @@ import HomePage from "./pages/Home";
 
 const router = createBrowserRouter([
   {
+    path: "/",
+    element: <HomePage />,
+  },
+  {
     path: "/register",
     element: <RegisterPage />,
   },
@@ -13,10 +17,6 @@ const router = createBrowserRouter([
     path: "/login",
     element: <LoginPage />,
   },
-  {
-    path: "/",
-    element: <HomePage />,
-  }
 ]);
 
 const App: React.FC = () => {

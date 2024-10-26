@@ -1,0 +1,47 @@
+footer {
+    grid-area: footer;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1% 5%;
+    grid-template-areas:
+        "company"
+        "divider"
+        "copyrights";
+    padding: 60px 120px;
+    background-color: #FFFFFF;
+    border-top: 1px solid #d8d8d8cc;
+    gap: 20px;
+}
+
+.company {
+    grid-area: company;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-divider {
+    grid-area: divider;
+    width: 100%;
+    background-color: #FFFFFF;
+    border-top: 1px solid #d8d8d8cc;
+}
+
+/** Mobile screen */
+@media (max-width: 480px) {
+    footer {
+        grid-template-rows: 1fr 1% 15%;
+        padding: 20px;
+        background-color: #FFFFFF;
+        gap: 16px;
+    }
+
+    .company {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+        background-color: #FFFFFF;
+        gap: 16px;
+    }
+}

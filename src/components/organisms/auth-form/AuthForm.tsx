@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "./AuthForm.css";
+import { FormValues, FormTypes } from "../../../interfaces/interfaces";
 import TitleForm from "../../molecules/title-form/TitleForm";
 import InputForm from "../../molecules/input-form/InputForm";
 import AuthButton from "../../molecules/auth-button/AuthButton";
-import { FormValues, FormTypes } from "../../../interfaces/interfaces";
+import "./AuthForm.css";
 
 const AuthForm: React.FC<{ title: string }> = ({ title }) => {
   const [values, setValues] = useState<FormValues>({
