@@ -1,0 +1,22 @@
+.copyrights {
+    grid-area: copyrights;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #333333AD;
+}
+
+.footer-social {
+    cursor: pointer;
+}
+
+@media (max-width: 480px) {
+    .copyrights {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: start;
+        background-color: #FFFFFF;
+        gap: 6px;
+    }
+}
