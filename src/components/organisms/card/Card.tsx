@@ -1,7 +1,7 @@
 import React from "react";
+import { Cards } from "../../../interfaces/interfaces";
 import Image from "../../atoms/Image";
 import ratingIcon from "../../../assets/svg/rating.svg";
-import { Cards } from "../../../interfaces/interfaces";
 import "./Card.css";
 
 const Card: React.FC<Cards> = ({

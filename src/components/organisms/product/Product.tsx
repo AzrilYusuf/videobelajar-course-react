@@ -3,16 +3,12 @@ import { dataProduct } from "../../../utils/dataProduct";
 import Card from "../../organisms/card/Card";
 import "./Product.css";
 import ProductMenu from "../../molecules/product-menu/ProductMenu";
+import ProductTitle from "../../molecules/product-title/ProductTitle";
 
 const Product: React.FC = () => {
   return (
     <section className="content">
-      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-        <h1 style={{ fontSize: "32px" }}>
-          Koleksi Video Pembelajaran Unggulan
-        </h1>
-        <p>Jelajahi Dunia Pengetahuan Melalui Pilihan Kami!</p>
-      </div>
+      <ProductTitle />
       <ProductMenu />
       <div className="price-list" id="priceList">
         {dataProduct.map((data) => {

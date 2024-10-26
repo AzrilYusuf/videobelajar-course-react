@@ -1,0 +1,14 @@
+.company-info {
+    display: flex;
+    gap: 48px;
+}
+
+@media (max-width: 480px) {
+    .company-info {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        width: 100%;
+        gap: 12px;
+    }
+}
