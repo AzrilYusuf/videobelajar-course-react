@@ -46,7 +46,7 @@
     }
 
     .accordion-header.active img {
-        transform: rotate(90deg);
+        transform: rotate(90deg) !important;
     }
 
     .accordion-content {
