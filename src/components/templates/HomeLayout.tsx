@@ -1,11 +1,16 @@
-import React from 'react'
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Navbar from "../organisms/navbar/Navbar";
+import Footer from "../organisms/footer/Footer";
 
-const HomeLayout: React.FC<{children: React.ReactNode}> = ({ children }) => {
+const HomeLayout: React.FC = () => {
   return (
     <div className="home-container">
-        {children}
+      <Navbar title="home" />
+      <Outlet />
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default HomeLayout
+export default HomeLayout;

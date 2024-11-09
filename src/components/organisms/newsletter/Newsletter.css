@@ -12,7 +12,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: linear-gradient(#000000CC, #000000CC),
+    background-image: linear-gradient(hsla(0, 0%, 0%, 0.8), hsla(0, 0%, 0%, 0.8)),
         url('https://s3-alpha-sig.figma.com/img/e0f7/1e25/cc34e79e1f52284620dbea34fb453966?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=IdQdsknXbxw-RwsVJocnDgCnJ-wBbOgrORs0mLhpNXAX~3EpY19jkS-QgvuQcR65i46BxNhcEySZaLDm0FUC8pSTvwiK5zi0748l~-LYWRvdGVdxuCGgcfbr8BBIhyzq~34jwuXeAstxD4KxaQJXyY3VNdZWMMS1yG8P~5nADgcwG3-O3v49LZS-Qz52oC~Uu8sudQAGV3O2feXO~MwuWoGo2nhVUkSk10sW67z6ehJLbB9CkE2JOCH3qA-3a3m-2SypjCDHfZylBGOb2lPalb0-sEcdKrBWaE6~TI79W2dBVxDXSm6nlPwRhX6nAh6nZF18oF9uE3-BaqZk5KzuFw__');
     background-repeat: no-repeat;
     background-position: center;
@@ -22,7 +22,7 @@
     padding: 82px 140px 64px 140px;
     border-radius: 10px;
     text-align: center;
-    color: #FFFFFF;
+    color: hsl(0, 0%, 100%);
     gap: 40px;
 }
 
@@ -38,7 +38,7 @@
 }
 
 .newsletter p {
-    color: #ffff;
+    color: hsl(0, 0%, 100%);
     font-weight: 400;
     line-height: 22.4px;
     letter-spacing: 0.2px;
@@ -54,7 +54,7 @@
     border: 0;
     border-radius: 10px;
     font-size: 16px;
-    background-color: #FFFFFF;
+    background-color: hsl(0, 0%, 100%);
 }
 
 .newsletter-input input {
@@ -69,22 +69,22 @@
     border: 0;
     border-radius: 10px;
     font-size: 16px;
-    background-color: #FFBD3A;
-    color: #FFFF;
+    background-color: hsl(40, 100%, 61%);
+    color: hsl(0, 0%, 100%);
 }
 
 .subscribe-button:hover {
-    background-color: #f0b236;
+    background-color: hsl(40, 86%, 58%);
 }
 
 .subscribe-button:active {
-    background-color: #FFD26B;
+    background-color: hsl(42, 100%, 71%);
 }
 
 /** Mobile screen */
 @media (max-width: 480px) {
     .newsletter-container {
-        background-color: #FFF9E0;
+        background-color: hsl(48, 100%, 94%);
         padding: 0px 20px 28px 20px;
     }
 
@@ -126,7 +126,7 @@
         width: 95.6%;
         text-align: center;
         padding: 10px 8px;
-        border: 1px solid #e3e3e3;
+        border: 1px solid hsl(0, 0%, 89%);
     }
 
     .subscribe-button {

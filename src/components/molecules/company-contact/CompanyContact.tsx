@@ -9,15 +9,15 @@ const CompanyContact: React.FC = () => {
       <div>
         <Image src={Logo} alt="Logo" />
       </div>
-      <h4 style={{ fontSize: "18px", color: "#222325" }}>
+      <h4 style={{ fontSize: "18px", color: "hsl(220, 4%, 14%)" }}>
         Gali Potensi Anda Melalui Pembelajaran
         <br />
         Video di hariesok.id!
       </h4>
-      <p style={{ color: "#222325" }}>
+      <p style={{ color: "hsl(220, 4%, 14%)" }}>
         Jl. Usman Effendi No. 50 Lowokwaru, Malang
       </p>
-      <p style={{ color: "#222325" }}>&#43;62-877-7123-1234</p>
+      <p style={{ color: "hsl(220, 4%, 14%)" }}>&#43;62-877-7123-1234</p>
     </div>
   );
 };

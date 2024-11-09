@@ -8,8 +8,8 @@ footer {
         "divider"
         "copyrights";
     padding: 60px 120px;
-    background-color: #FFFFFF;
-    border-top: 1px solid #d8d8d8cc;
+    background-color: hsl(0, 0%, 100%);
+    border-top: 1px solid hsla(0, 0%, 85%, 0.8);
     gap: 20px;
 }
 
@@ -23,8 +23,8 @@ footer {
 .footer-divider {
     grid-area: divider;
     width: 100%;
-    background-color: #FFFFFF;
-    border-top: 1px solid #d8d8d8cc;
+    background-color: hsl(0, 0%, 100%);
+    border-top: 1px solid hsla(0, 0%, 85%, 0.8);
 }
 
 /** Mobile screen */
@@ -32,7 +32,7 @@ footer {
     footer {
         grid-template-rows: 1fr 1% 15%;
         padding: 20px;
-        background-color: #FFFFFF;
+        background-color: hsl(0, 0%, 100%);
         gap: 16px;
     }
 
@@ -41,7 +41,7 @@ footer {
         flex-direction: column;
         justify-content: center;
         align-items: start;
-        background-color: #FFFFFF;
+        background-color: hsl(0, 0%, 100%);
         gap: 16px;
     }
 }
