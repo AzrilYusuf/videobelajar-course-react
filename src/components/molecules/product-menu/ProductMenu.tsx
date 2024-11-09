@@ -4,7 +4,7 @@ const ProductMenu: React.FC = () => {
   return (
     <ul className="menu-list">
       <li>
-        <a href="./home.html" style={{ color: "#f64920" }}>
+        <a href="./home.html" style={{ color: "hsl(11, 92%, 55%)" }}>
           Semua Kelas
         </a>
       </li>

@@ -5,6 +5,6 @@
     margin-right: 7%;
     gap: 30%;
     size: 16px;
-    color: #333333AD;
+    color: hsla(0, 0%, 20%, 0.678);
     cursor: pointer;
 }

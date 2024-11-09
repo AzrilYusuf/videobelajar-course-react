@@ -46,7 +46,7 @@ const Card: React.FC<Cards> = ({
           <p
             style={{
               fontSize: "14px",
-              color: "#333333ad",
+              color: "hsla(0, 0%, 20%, 0.678)",
               textDecoration: "underline",
             }}
           >
@@ -54,7 +54,7 @@ const Card: React.FC<Cards> = ({
           </p>
         </div>
         <h2
-          style={{ fontWeight: "600", lineHeight: "28.8px", color: "#3ecf4c" }}
+          style={{ fontWeight: "600", lineHeight: "28.8px", color: "hsl(126, 60%, 53%)" }}
         >
           {price}
         </h2>
