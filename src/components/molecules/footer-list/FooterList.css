@@ -6,7 +6,7 @@
 
 .footer-list p {
     font-weight: 700;
-    color: #222325;
+    color: hsl(220, 4%, 14%);
 }
 
 .footer-list ul {
@@ -14,7 +14,7 @@
     flex-direction: column;
     list-style: none;
     cursor: pointer;
-    color: #333333AD;
+    color: hsla(0, 0%, 20%, 0.678);
     gap: 13px;
 }
 
