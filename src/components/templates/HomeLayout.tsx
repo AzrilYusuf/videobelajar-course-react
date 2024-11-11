@@ -5,11 +5,11 @@ import Footer from "../organisms/footer/Footer";
 
 const HomeLayout: React.FC = () => {
   return (
-    <div className="home-container">
+    <>
       <Navbar title="home" />
       <Outlet />
       <Footer />
-    </div>
+    </>
   );
 };
 
