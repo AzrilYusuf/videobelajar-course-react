@@ -4,6 +4,7 @@ import HomeLayout from "../components/templates/HomeLayout";
 import RegisterPage from "../pages/Register";
 import LoginPage from "../pages/Login";
 import HomePage from "../pages/Home";
+import UserProfilePage from "../pages/UserProfile";
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: <HomePage />,
+      },
+      {
+        path: "/user/profile",
+        element: <UserProfilePage />,
       },
     ],
   },
