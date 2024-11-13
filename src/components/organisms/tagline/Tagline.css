@@ -53,6 +53,7 @@
 
 .success-button:hover {
     background-color: hsl(126, 54%, 50%);
+    transition: all 0.2s ease-in-out;
 }
 
 .success-button:active {

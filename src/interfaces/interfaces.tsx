@@ -57,3 +57,10 @@ export interface Cards {
   rating: string;
   price: string;
 }
+
+// Used in UserProfile
+export interface UserProfile {
+  fullname: string;
+  email: string;
+  phone_number: string;
+}

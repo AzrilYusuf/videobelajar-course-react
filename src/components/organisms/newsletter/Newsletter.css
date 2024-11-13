@@ -75,6 +75,7 @@
 
 .subscribe-button:hover {
     background-color: hsl(40, 86%, 58%);
+    transition: all 0.2s ease-in-out;
 }
 
 .subscribe-button:active {
