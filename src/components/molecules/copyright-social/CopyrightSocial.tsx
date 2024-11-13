@@ -8,7 +8,7 @@ import "./CopyrightSocial.css";
 
 const CopyrightSocial: React.FC = () => {
   return (
-    <div className="copyrights">
+    <div className="copyrights poopins-font">
       <div>&#64;2024 Gerobak Sayur All Rights Reserved.</div>
       <div style={{ display: "flex", gap: "15px" }}>
         {/* <!-- LinkedIn --> */}

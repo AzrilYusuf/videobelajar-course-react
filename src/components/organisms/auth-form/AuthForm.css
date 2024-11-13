@@ -128,6 +128,7 @@ input:focus {
 
 .forgot-password:hover {
     color: hsl(126, 54%, 48%);
+    transition: all 0.2s ease-in-out;
 }
 
 .auth-button {
@@ -171,6 +172,7 @@ input:focus {
 
 .google-button:hover {
     background-color: hsl(0, 0%, 93%);
+    transition: all 0.2s ease-in-out;
 }
 
 .auth-button-1 {
@@ -180,6 +182,7 @@ input:focus {
 
 .auth-button-1:hover{
     background-color: hsl(126, 54%, 48%);
+    transition: all 0.2s ease-in-out;
 }
 
 .auth-button-1:active{
@@ -193,6 +196,7 @@ input:focus {
 
 .auth-button-2:hover{
     background-color: hsla(105, 49%, 87%, 0.8);
+    transition: all 0.2s ease-in-out;
 }
 
 .auth-button-2:active{

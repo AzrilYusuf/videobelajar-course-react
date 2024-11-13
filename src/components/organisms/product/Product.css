@@ -23,6 +23,7 @@
 .menu-list a:hover {
     color: hsl(11, 92%, 55%);
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
 }
 
 .menu-list a:hover::before,

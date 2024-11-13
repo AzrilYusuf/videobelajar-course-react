@@ -6,11 +6,11 @@
     height: 10%;
 }
 
-h1 {
+.title-form h1 {
     font-weight: 600;
 }
 
-p {
+.title-form p {
     margin-top: 5px;
     color: hsl(0, 0%, 20%);
 }
