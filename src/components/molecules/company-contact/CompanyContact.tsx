@@ -9,7 +9,7 @@ const CompanyContact: React.FC = () => {
       <div>
         <Image src={Logo} alt="Logo" />
       </div>
-      <h4 style={{ fontSize: "18px", color: "hsl(220, 4%, 14%)" }}>
+      <h4 className="lato-font" style={{ fontSize: "18px", color: "hsl(220, 4%, 14%)" }}>
         Gali Potensi Anda Melalui Pembelajaran
         <br />
         Video di hariesok.id!
