@@ -31,6 +31,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
       isSelect: false,
       toggleHide: false,
       handleChange: handleInput,
+      isRequired: true,
     },
   ];
 
@@ -47,6 +48,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           isSelect: false,
           toggleHide: false,
           handleChange: handleInput,
+          isRequired: true,
         },
         {
           key: 2,
@@ -58,6 +60,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           isSelect: false,
           toggleHide: false,
           handleChange: handleInput,
+          isRequired: true,
         },
         {
           key: 3,
@@ -69,6 +72,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           isSelect: true,
           toggleHide: false,
           handleChange: handleInput,
+          isRequired: true,
         },
         {
           key: 4,
@@ -80,6 +84,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           isSelect: false,
           toggleHide: true,
           handleChange: handleInput,
+          isRequired: true,
         },
         {
           key: 5,
@@ -91,6 +96,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           isSelect: false,
           toggleHide: true,
           handleChange: handleInput,
+          isRequired: true,
         },
       ];
     } else if (title === "login") {
@@ -105,6 +111,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           isSelect: false,
           toggleHide: false,
           handleChange: handleInput,
+          isRequired: true,
         },
         {
           key: 2,
@@ -116,11 +123,12 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           isSelect: false,
           toggleHide: true,
           handleChange: handleInput,
+          isRequired: true,
         },
       ];
     }
   };
-
+  
   renderContent(title);
 
   return (
@@ -138,6 +146,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
             isSelect={form.isSelect}
             toggleHide={form.toggleHide}
             handleChange={handleInput}
+            isRequired={form.isRequired}
           />
         ))}
 
