@@ -1,14 +1,16 @@
 import React from "react";
+import { LabelProps } from "../../interfaces/interfaces";
 
-interface Props {
-  htmlFor: string;
-  children: string;
-}
-
-const Label: React.FC<Props> = ({ htmlFor, children }) => {
+const Label: React.FC<LabelProps> = ({
+  htmlFor,
+  className,
+  children,
+  isRequired,
+}) => {
   return (
-    <label htmlFor={htmlFor}>
-      {children} <span className="red-color">&lowast;</span>
+    <label htmlFor={htmlFor} className={className}>
+      {children}{" "}
+      {isRequired == true && <span className="red-color">&lowast;</span>}
     </label>
   );
 };
