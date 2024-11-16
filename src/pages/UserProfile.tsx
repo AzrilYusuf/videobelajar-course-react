@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Image from "../components/atoms/Image";
+import Input from "../components/atoms/Input";
+import Label from "../components/atoms/Label";
 import Button from "../components/atoms/Button";
 import userIcon from "../assets/svg/user-icon-active.svg";
 import userClass from "../assets/svg/user-class-nonactive.svg";
@@ -58,51 +60,56 @@ const UserProfilePage: React.FC = () => {
         <div
           style={{
             display: "flex",
-            justifyContent: "space-evenly",
+            justifyContent: "center",
             gap: "0.8em",
           }}
         >
           <div className="form-group">
-            <input
+            <Input
+              id="fullname"
               type="text"
               name="fullname"
-              id="fullname"
               className="form-control"
-              placeholder=""
-              onChange={handleInput}
-              required
+              value={values.fullname}
+              handleChange={handleInput}
             />
-            <label htmlFor="fullname" className="form-label">
+            <Label htmlFor="fullname" className="form-label" isRequired={false}>
               Nama Lengkap
-            </label>
+            </Label>
           </div>
           <div className="form-group">
-            <input
+            <Input
+              id="email"
               type="email"
               name="email"
-              id="email"
               className="form-control"
-              placeholder=" "
-              onChange={handleInput}
-              required
+              value={values.email}
+              handleChange={handleInput}
             />
-            <label htmlFor="email" className="form-label">
+            <Label htmlFor="email" className="form-label" isRequired={false}>
               E-Mail
-            </label>
+            </Label>
           </div>
           <div className="form-group">
-            <input
+          <select id="phone" className="form-select" name="phone-number">
+              <option value="1">+62</option>
+              <option value="2">+63</option>
+              <option value="3">+64</option>
+              <option value="4">+65</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <Input
+              id="phone"
               type="tel"
               name="phone_number"
-              id="phone"
               className="form-control"
-              placeholder=" "
-              onChange={handleInput}
-              required
+              value={values.phone_number}
+              handleChange={handleInput}
             />
-            <label htmlFor="phone" className="form-label">
+            <Label htmlFor="phone" className="form-label" isRequired={false}>
               No. Hp
-            </label>
+            </Label>
           </div>
         </div>
         <Button

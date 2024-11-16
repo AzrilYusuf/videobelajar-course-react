@@ -3,9 +3,18 @@ export interface InputProps {
   id?: string;
   type: string;
   name: string;
+  className?: string;
   style?: React.CSSProperties;
   placeholder?: string;
+  value?: string;
   handleChange: React.ChangeEventHandler<HTMLInputElement>; // Define the type for handleChange
+}
+
+export interface LabelProps {
+  htmlFor: string;
+  className?: string;
+  children: string;
+  isRequired: boolean;
 }
 
 export interface ButtonProps {
@@ -27,6 +36,7 @@ export interface FormTypes {
   toggleHide?: boolean;
   placeholder?: string;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
+  isRequired: boolean;
 }
 
 export interface FooterList {
