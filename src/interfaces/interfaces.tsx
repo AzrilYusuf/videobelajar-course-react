@@ -24,6 +24,14 @@ export interface ButtonProps {
   children?: React.ReactNode;
 }
 
+export interface ImageProps {
+  className?: string;
+  src: string;
+  alt: string;
+  style?: React.CSSProperties;
+  handleClick?: React.MouseEventHandler<HTMLImageElement>;
+}
+
 // Used in molecule and organism
 export interface FormTypes {
   key: number;
