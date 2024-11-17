@@ -1,19 +1,15 @@
 import React from "react";
+import { ImageProps } from "../../interfaces/interfaces";
 
-interface Props {
-  className?: string;
-  src: string;
-  alt: string;
-  style?: React.CSSProperties;
-}
 
-const Image: React.FC<Props> = ({ className, src, alt, style }) => {
+const Image: React.FC<ImageProps> = ({ className, src, alt, style, handleClick }) => {
   return (
     <img
       className={className}
       src={src}
       alt={alt}
       style={style}
+      onClick={handleClick}
     />
   );
 };
