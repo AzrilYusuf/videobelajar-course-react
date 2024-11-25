@@ -72,8 +72,8 @@ const UserProfilePage: React.FC = () => {
           <div
             style={{ display: "flex", flexDirection: "column", gap: "0.4em" }}
           >
-            <h3>Jennie Ruby Jane</h3>
-            <p style={{ color: "hsl(0, 0%, 0%)" }}>rubyjane@gmail.com</p>
+            <h3>{values.fullname}</h3>
+            <p style={{ color: "hsl(0, 0%, 0%)" }}>{values.email}</p>
             <p style={{ color: "hsla(11, 92%, 55%, 1)", cursor: "pointer" }}>
               Ganti Foto Profil
             </p>
