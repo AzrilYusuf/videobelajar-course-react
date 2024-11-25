@@ -1,23 +1,76 @@
 import React, { useState } from "react";
-import { FormValues, FormTypes } from "../../../interfaces/interfaces";
+import { useNavigate } from "react-router-dom";
 import TitleForm from "../../molecules/title-form/TitleForm";
 import InputForm from "../../molecules/input-form/InputForm";
 import AuthButton from "../../molecules/auth-button/AuthButton";
+import {
+  // FormValues,
+  FormTypes,
+  UserProfile,
+} from "../../../interfaces/interfaces";
 import "./AuthForm.css";
 
 const AuthForm: React.FC<{ title: string }> = ({ title }) => {
-  const [values, setValues] = useState<FormValues>({
-    fullname: "",
-    email: "",
-    phone_number: "",
-    password: "",
-    confirm_password: "",
+  const [profile, setProfile] = useState<UserProfile>(() => {
+    const storedProfile = localStorage.getItem("profile");
+    return storedProfile
+      ? JSON.parse(storedProfile)
+      : { fullname: "", email: "", phone_number: "", password: "" };
   });
+  const [confirm_password, setConfirmPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const navigate = useNavigate();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-    // console.log(values);
-    // console.log(e.target.value);
+      const { name, value } = e.target;
+
+      if (name === "confirm_password") {
+        setConfirmPassword(value);
+      } else {
+        setProfile({
+          ...profile,
+          [e.target.name]: e.target.value,
+        });
+      }
+    // }
+    console.log(profile);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (title === "register") {
+      if (profile.password !== confirm_password) {
+        setError("Password harus sama!");
+        return;
+      }
+      setError("");
+  
+      // Store the profile data in local storage (without confirm_password)
+      localStorage.setItem("profile", JSON.stringify(profile));
+      console.log("Profile stored: ",profile);
+      navigate("/login");
+    } else {
+      const storedProfile = localStorage.getItem("profile");
+      if (!storedProfile) {
+        setError("Tidak ada akun yang terdaftar, mohon daftar terlebih dahulu.");
+        console.log(error);
+        return;
+      }
+      const registeredProfile = JSON.parse(storedProfile);
+      
+      // Validate email and password
+      if (profile.email !== registeredProfile.email || profile.password !== registeredProfile.password) {
+        setError("Email atau password salah!");
+        console.log(error);
+        return;
+      }
+      setError("");
+      
+      console.log("values", profile);
+      console.log("registeredProfile", registeredProfile);
+      navigate("/");
+    }
   };
 
   let formTypes: FormTypes[] = [
@@ -128,13 +181,16 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
       ];
     }
   };
-  
+
   renderContent(title);
 
   return (
     <div className={title === "register" ? "register" : "login"}>
       <TitleForm title={title} />
-      <div className={title === "register" ? "register-form" : "login-form"}>
+      <form
+        className={title === "register" ? "register-form" : "login-form"}
+        onSubmit={(e) => handleSubmit(e)}
+      >
         {formTypes.map((form) => (
           <InputForm
             key={form.key}
@@ -145,7 +201,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
             inputName={form.inputName}
             isSelect={form.isSelect}
             toggleHide={form.toggleHide}
-            handleChange={handleInput}
+            handleChange={form.handleChange}
             isRequired={form.isRequired}
           />
         ))}
@@ -153,9 +209,9 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
         <a href="#register" className="forgot-password">
           Lupa Password?
         </a>
-      </div>
-
-      <AuthButton title={title === "register" ? "register" : "login"} />
+        {error && <p style={{ color: "red" }}>&lowast; {error}</p>}
+        <AuthButton title={title === "register" ? "register" : "login"} />
+      </form>
     </div>
   );
 };
