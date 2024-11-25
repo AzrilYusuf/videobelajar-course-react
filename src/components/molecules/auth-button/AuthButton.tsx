@@ -47,7 +47,7 @@ const AuthButton: React.FC<{ title: string }> = ({ title }) => {
       <Button
         type="submit"
         className="button auth-button-1"
-        handleClick={(e) => handleClick(e, destination.button1)}
+        // handleClick={(e) => handleClick(e, destination.button1)}
       >
         {title === "register" ? "Daftar" : "Masuk"}
       </Button>

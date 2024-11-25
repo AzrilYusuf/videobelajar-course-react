@@ -14,6 +14,7 @@ const UserProfilePage: React.FC = () => {
     fullname: "Jennie Ruby Jane",
     email: "rubyjane@gmail.com",
     phone_number: "+6281234567890",
+    password: "password123",
   });
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {

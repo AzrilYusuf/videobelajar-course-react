@@ -20,7 +20,7 @@ export interface LabelProps {
 export interface ButtonProps {
   type?: "button" | "submit" | "reset";
   className?: string;
-  handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  handleClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   children?: React.ReactNode;
 }
 
@@ -63,6 +63,14 @@ export interface FormValues {
   confirm_password: string;
 }
 
+// Used in UserProfile and AuthForm
+export interface UserProfile {
+  fullname: string;
+  email: string;
+  phone_number: string;
+  password: string;
+}
+
 // Used in organism
 export interface Cards {
   id: number;
@@ -76,9 +84,3 @@ export interface Cards {
   price: string;
 }
 
-// Used in UserProfile
-export interface UserProfile {
-  fullname: string;
-  email: string;
-  phone_number: string;
-}
