@@ -178,6 +178,7 @@ hr {
 }
 
 .save-button {
+  position: relative;
   width: 112px;
   height: 46px;
   margin-left: auto;

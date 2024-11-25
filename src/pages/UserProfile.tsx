@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "../components/atoms/Image";
 import Input from "../components/atoms/Input";
 import Label from "../components/atoms/Label";
@@ -10,17 +10,39 @@ import userImage from "../assets/img/user-profile-image.png";
 import { UserProfile } from "../interfaces/interfaces";
 
 const UserProfilePage: React.FC = () => {
-  const [values, setValues] = useState<UserProfile>({
-    fullname: "Jennie Ruby Jane",
-    email: "rubyjane@gmail.com",
-    phone_number: "+6281234567890",
-    password: "password123",
+  const [values, setValues] = useState<UserProfile>(() => {
+    const storedProfile = localStorage.getItem("profile");
+    return storedProfile
+      ? JSON.parse(storedProfile)
+      : { fullname: "", email: "", phone_number: "", password: "" };
   });
+  const [error, setError] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
+
+  useEffect(() => {
+    if (message || error) {
+      const timeout = setTimeout(() => {
+        setMessage("");
+        setError("");
+      }, 2000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [message, error]);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [e.target.name]: e.target.value });
-    // console.log(values);
-    // console.log(e.target.value);
+    console.log(values);
+  };
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    if (!values.fullname || !values.email || !values.phone_number) {
+      setError("Semua data harus diisi!");
+      return;
+    }
+    localStorage.setItem("profile", JSON.stringify(values));
+    setMessage("Profil berhasil diubah!");
   };
 
   return (
@@ -113,10 +135,12 @@ const UserProfilePage: React.FC = () => {
             </Label>
           </div>
         </div>
+        {message && <p style={{ position: "absolute", color: "green", right: "20%", bottom: "54.5%", display: "block", transition: "1s ease display" }}>{message}</p>}
+        {error && <p style={{ position: "absolute", color: "red", right: "20%", bottom: "54.5%" }}>{error}</p>}
         <Button
           type="submit"
           className="button auth-button-1 save-button"
-          handleClick={(e) => console.log(e)}
+          handleClick={handleSubmit}
         >
           Simpan
         </Button>
