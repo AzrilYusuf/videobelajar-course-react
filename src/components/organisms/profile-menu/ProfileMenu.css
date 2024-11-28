@@ -1,0 +1,35 @@
+.profile-menu {
+    display: flex;
+    flex-direction: column;
+    width: 242px;
+    height: 161px;
+    background-color: hsl(0, 0%, 100%);
+    padding: 1.2em;
+    border: 1px solid hsla(265, 10%, 23%, 0.12);
+    border-radius: 10px;
+    gap: 0.6em;
+    font-size: 20px;
+    list-style: none;
+}
+
+.profile-menu li {
+    display: flex;
+    gap: 0.6em;
+    padding: 0.6em;
+    color: hsla(265, 10%, 23%, 0.38);
+    cursor: pointer;
+}
+
+.profile-menu li:hover {
+    background-color: hsla(48, 100%, 92%, 0.8);
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+}
+
+.profile-menu li.active {
+    padding: 0.55em;
+    background-color: hsla(48, 100%, 92%, 0.8);
+    color: hsla(40, 100%, 61%, 1) !important;
+    border: 1px solid hsla(40, 100%, 61%, 1);
+    border-radius: 4px;
+}
