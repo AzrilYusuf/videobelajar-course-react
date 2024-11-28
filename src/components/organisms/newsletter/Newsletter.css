@@ -13,7 +13,7 @@
     align-items: center;
     justify-content: center;
     background-image: linear-gradient(hsla(0, 0%, 0%, 0.8), hsla(0, 0%, 0%, 0.8)),
-        url('https://s3-alpha-sig.figma.com/img/e0f7/1e25/cc34e79e1f52284620dbea34fb453966?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=IdQdsknXbxw-RwsVJocnDgCnJ-wBbOgrORs0mLhpNXAX~3EpY19jkS-QgvuQcR65i46BxNhcEySZaLDm0FUC8pSTvwiK5zi0748l~-LYWRvdGVdxuCGgcfbr8BBIhyzq~34jwuXeAstxD4KxaQJXyY3VNdZWMMS1yG8P~5nADgcwG3-O3v49LZS-Qz52oC~Uu8sudQAGV3O2feXO~MwuWoGo2nhVUkSk10sW67z6ehJLbB9CkE2JOCH3qA-3a3m-2SypjCDHfZylBGOb2lPalb0-sEcdKrBWaE6~TI79W2dBVxDXSm6nlPwRhX6nAh6nZF18oF9uE3-BaqZk5KzuFw__');
+        url('../../../assets/img/newsletter.jpeg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
