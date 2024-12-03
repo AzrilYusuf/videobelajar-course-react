@@ -3,14 +3,23 @@ import { useNavigate } from "react-router-dom";
 import TitleForm from "../../molecules/title-form/TitleForm";
 import InputForm from "../../molecules/input-form/InputForm";
 import AuthButton from "../../molecules/auth-button/AuthButton";
-import {
-  // FormValues,
-  FormTypes,
-  UserProfile,
-} from "../../../interfaces/interfaces";
+import { FormTypes, UserProfile } from "../../../interfaces/interfaces";
+import { useAuthStore } from "../../../stores/registerStore";
 import "./AuthForm.css";
 
 const AuthForm: React.FC<{ title: string }> = ({ title }) => {
+  const {
+    fullname,
+    email,
+    phone_number,
+    password,
+    setFullname,
+    setEmail,
+    setPhoneNumber,
+    setPassword,
+    saveProfile,
+    login,
+  } = useAuthStore((state) => state);
   const [profile, setProfile] = useState<UserProfile>(() => {
     const storedProfile = localStorage.getItem("profile");
     return storedProfile
@@ -22,54 +31,71 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
   const navigate = useNavigate();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
+    const { name, value } = e.target;
 
-      if (name === "confirm_password") {
-        setConfirmPassword(value);
-      } else {
-        setProfile({
-          ...profile,
-          [e.target.name]: e.target.value,
-        });
-      }
+    if (name === "confirm_password") {
+      setConfirmPassword(value);
+    } else {
+      setProfile({
+        ...profile,
+        [e.target.name]: e.target.value,
+      });
+    }
     // }
-    console.log(profile);
+    // console.log(profile);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (title === "register") {
-      if (profile.password !== confirm_password) {
-        setError("Password harus sama!");
+      // * Register user
+      // Check if all fields are filled
+      if (
+        !fullname ||
+        !email ||
+        !phone_number ||
+        !password ||
+        !confirm_password
+      ) {
+        setError("Semua data harus diisi!");
+        return;
+      }
+
+      // Check if password and confirm password match
+      if (password !== confirm_password) {
+        setError("Password dan konfirmasi password harus sama!");
         return;
       }
       setError("");
-  
+
       // Store the profile data in local storage (without confirm_password)
-      localStorage.setItem("profile", JSON.stringify(profile));
-      console.log("Profile stored: ",profile);
+      saveProfile();
       navigate("/login");
     } else {
-      const storedProfile = localStorage.getItem("profile");
-      if (!storedProfile) {
-        setError("Tidak ada akun yang terdaftar, mohon daftar terlebih dahulu.");
-        console.log(error);
-        return;
+      // ** Login user
+      const storedProfile = localStorage.getItem("userProfile");
+      // Check if the user is registered
+      if (storedProfile !== null) {
+        const { email: storedEmail, password: storedPassword } =
+          JSON.parse(storedProfile);
+        // Check if the email and password match
+        if (email !== storedEmail) {
+          setError(
+            "Tidak ada akun yang terdaftar, mohon daftar terlebih dahulu."
+          );
+          return;
+        } else if (password !== storedPassword) {
+          setError("Password yang Anda masukkan salah!");
+        } else {
+          login();
+          navigate("/");
+        }
+      } else {
+        setError(
+          "Tidak ada akun yang terdaftar, mohon daftar terlebih dahulu."
+        );
       }
-      const registeredProfile = JSON.parse(storedProfile);
-      
-      // Validate email and password
-      if (profile.email !== registeredProfile.email || profile.password !== registeredProfile.password) {
-        setError("Email atau password salah!");
-        console.log(error);
-        return;
-      }
-      setError("");
-      
-      console.log("values", profile);
-      console.log("registeredProfile", registeredProfile);
-      navigate("/");
     }
   };
 
@@ -100,7 +126,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           inputName: "fullname",
           isSelect: false,
           toggleHide: false,
-          handleChange: handleInput,
+          handleChange: setFullname,
           isRequired: true,
         },
         {
@@ -112,7 +138,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           inputName: "email",
           isSelect: false,
           toggleHide: false,
-          handleChange: handleInput,
+          handleChange: setEmail,
           isRequired: true,
         },
         {
@@ -124,7 +150,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           inputName: "phone_number",
           isSelect: true,
           toggleHide: false,
-          handleChange: handleInput,
+          handleChange: setPhoneNumber,
           isRequired: true,
         },
         {
@@ -136,7 +162,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           inputName: "password",
           isSelect: false,
           toggleHide: true,
-          handleChange: handleInput,
+          handleChange: setPassword,
           isRequired: true,
         },
         {
@@ -163,7 +189,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           inputName: "email",
           isSelect: false,
           toggleHide: false,
-          handleChange: handleInput,
+          handleChange: setEmail,
           isRequired: true,
         },
         {
@@ -175,7 +201,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           inputName: "password",
           isSelect: false,
           toggleHide: true,
-          handleChange: handleInput,
+          handleChange: setPassword,
           isRequired: true,
         },
       ];
@@ -189,7 +215,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
       <TitleForm title={title} />
       <form
         className={title === "register" ? "register-form" : "login-form"}
-        onSubmit={(e) => handleSubmit(e)}
+        onSubmit={handleSubmit}
       >
         {formTypes.map((form) => (
           <InputForm
