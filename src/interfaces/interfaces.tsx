@@ -32,7 +32,7 @@ export interface ImageProps {
   handleClick?: React.MouseEventHandler<HTMLImageElement>;
 }
 
-// Used in molecule and organism
+// Used in molecule and organism (AuthForm)
 export interface FormTypes {
   key: number;
   htmlFor: string;
@@ -43,7 +43,7 @@ export interface FormTypes {
   isSelect?: boolean;
   toggleHide?: boolean;
   placeholder?: string;
-  handleChange: React.ChangeEventHandler<HTMLInputElement>;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isRequired: boolean;
 }
 
@@ -69,6 +69,19 @@ export interface UserProfile {
   email: string;
   phone_number: string;
   password: string;
+}
+
+export interface AuthState {
+  fullname: string;
+  email: string;
+  phone_number: string;
+  password: string;
+  setFullname: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setPhoneNumber: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setPassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  saveProfile: () => void;
+  login: () => boolean;
 }
 
 // Used in organism
