@@ -4,7 +4,7 @@ import TitleForm from "../../molecules/title-form/TitleForm";
 import InputForm from "../../molecules/input-form/InputForm";
 import AuthButton from "../../molecules/auth-button/AuthButton";
 import { FormTypes, UserProfile } from "../../../interfaces/interfaces";
-import { useAuthStore } from "../../../stores/registerStore";
+import { useAuthStore } from "../../../stores/authStore.tsx";
 import "./AuthForm.css";
 
 const AuthForm: React.FC<{ title: string }> = ({ title }) => {
