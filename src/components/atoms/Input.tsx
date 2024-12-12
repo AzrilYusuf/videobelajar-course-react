@@ -1,10 +1,11 @@
 import React from "react";
-import { InputProps } from "../../interfaces/interfaces";
+import { InputProps } from "../../interfaces/component.interface";
 
 const Input: React.FC<InputProps> = ({
   id,
   type,
   name,
+  inputMode,
   className,
   style,
   placeholder,
@@ -16,6 +17,7 @@ const Input: React.FC<InputProps> = ({
       id={id}
       type={type}
       name={name}
+      inputMode={inputMode}
       className={className}
       style={style}
       placeholder={placeholder}

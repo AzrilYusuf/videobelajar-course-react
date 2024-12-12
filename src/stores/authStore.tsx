@@ -1,6 +1,6 @@
 import React from "react";
 import { create } from "zustand";
-import { AuthState, UserProfile } from "../interfaces/interfaces";
+import { AuthState, UserProfile } from "../interfaces/component.interface";
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   fullname: "",

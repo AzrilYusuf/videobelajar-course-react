@@ -1,5 +1,5 @@
 import React from "react";
-import { LabelProps } from "../../interfaces/interfaces";
+import { LabelProps } from "../../interfaces/component.interface";
 
 const Label: React.FC<LabelProps> = ({
   htmlFor,

@@ -3,6 +3,7 @@ export interface InputProps {
   id?: string;
   type: string;
   name: string;
+  inputMode?: "email" | "search" | "text" | "numeric" | "none" | "tel" | "url" | "decimal";
   className?: string;
   style?: React.CSSProperties;
   placeholder?: string;
@@ -40,6 +41,7 @@ export interface FormTypes {
   id: string;
   inputType: string;
   inputName: string;
+  inputMode?: "email" | "search" | "text" | "numeric" | "none" | "tel" | "url" | "decimal";
   isSelect?: boolean;
   toggleHide?: boolean;
   placeholder?: string;
@@ -71,19 +73,6 @@ export interface UserProfile {
   password: string;
 }
 
-export interface AuthState {
-  fullname: string;
-  email: string;
-  phone_number: string;
-  password: string;
-  setFullname: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setPhoneNumber: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setPassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  saveProfile: () => void;
-  login: () => boolean;
-}
-
 // Used in organism
 export interface Cards {
   id: number;
@@ -97,3 +86,16 @@ export interface Cards {
   price: string;
 }
 
+// For authStore
+  export interface AuthState {
+    fullname: string;
+    email: string;
+    phone_number: string;
+    password: string;
+    setFullname: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    setEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    setPhoneNumber: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    setPassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    saveProfile: () => void;
+    login: () => boolean;
+  }

@@ -1,4 +1,4 @@
-import { Cards } from "../interfaces/interfaces";
+import { Cards } from "../interfaces/component.interface";
 import bgProduct from "../assets/img/product1.jpeg";
 import bgTutor from "../assets/img/tutor.png"
 
