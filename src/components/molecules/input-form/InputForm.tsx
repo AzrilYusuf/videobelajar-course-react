@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormTypes } from "../../../interfaces/interfaces";
+import { FormTypes } from "../../../interfaces/component.interface";
 import Label from "../../atoms/Label";
 import Input from "../../atoms/Input";
 import Image from "../../atoms/Image";
@@ -12,6 +12,7 @@ const InputForm: React.FC<FormTypes> = ({
   id,
   inputType,
   inputName,
+  inputMode,
   isSelect,
   toggleHide,
   placeholder,
@@ -40,6 +41,7 @@ const InputForm: React.FC<FormTypes> = ({
               id={id}
               type={inputType}
               name={inputName}
+              inputMode={inputMode}
               style={{ width: "100%" }}
               placeholder={placeholder}
               handleChange={handleChange}

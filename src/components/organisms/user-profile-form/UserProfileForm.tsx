@@ -5,7 +5,7 @@ import Label from "../../atoms/Label";
 import Input from "../../atoms/Input";
 import Button from "../../atoms/Button";
 import userImage from "../../../assets/img/user-profile-image.png";
-import { UserProfile } from "../../../interfaces/interfaces";
+import { UserProfile } from "../../../interfaces/component.interface";
 import "./UserProfileForm.css";
 
 const UserProfileForm = () => {

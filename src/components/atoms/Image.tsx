@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageProps } from "../../interfaces/interfaces";
+import { ImageProps } from "../../interfaces/component.interface";
 
 
 const Image: React.FC<ImageProps> = ({ className, src, alt, style, handleClick }) => {

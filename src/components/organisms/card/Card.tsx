@@ -1,5 +1,5 @@
 import React from "react";
-import { Cards } from "../../../interfaces/interfaces";
+import { Cards } from "../../../interfaces/component.interface";
 import Image from "../../atoms/Image";
 import ratingIcon from "../../../assets/svg/rating.svg";
 import "./Card.css";

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import type { FooterList } from "../../../interfaces/interfaces";
+import type { FooterList } from "../../../interfaces/component.interface";
 import Image from "../../atoms/Image";
 import RightArrow from "../../../assets/svg/right-arrow.svg";
 import "./FooterList.css";
