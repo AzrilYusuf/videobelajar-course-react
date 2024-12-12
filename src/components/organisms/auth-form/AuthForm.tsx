@@ -3,28 +3,18 @@ import { useNavigate } from "react-router-dom";
 import TitleForm from "../../molecules/title-form/TitleForm";
 import InputForm from "../../molecules/input-form/InputForm";
 import AuthButton from "../../molecules/auth-button/AuthButton";
-import { FormTypes, UserProfile } from "../../../interfaces/interfaces";
-import { useAuthStore } from "../../../stores/authStore.tsx";
+import { FormTypes, UserProfile } from "../../../interfaces/component.interface.tsx";
+// import { useAuthStore } from "../../../stores/authStore.tsx";
 import "./AuthForm.css";
+import { checkUserByEmail, createUser } from "../../../services/user.service.ts";
+import { AxiosError } from "axios";
 
 const AuthForm: React.FC<{ title: string }> = ({ title }) => {
-  const {
-    fullname,
-    email,
-    phone_number,
-    password,
-    setFullname,
-    setEmail,
-    setPhoneNumber,
-    setPassword,
-    saveProfile,
-    login,
-  } = useAuthStore((state) => state);
-  const [profile, setProfile] = useState<UserProfile>(() => {
-    const storedProfile = localStorage.getItem("profile");
-    return storedProfile
-      ? JSON.parse(storedProfile)
-      : { fullname: "", email: "", phone_number: "", password: "" };
+  const [values, setValues] = useState<UserProfile>({
+    fullname: "",
+    email: "",
+    phone_number: "",
+    password: "",
   });
   const [confirm_password, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
@@ -33,29 +23,27 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
+    // Handle confirm password
     if (name === "confirm_password") {
       setConfirmPassword(value);
     } else {
-      setProfile({
-        ...profile,
-        [e.target.name]: e.target.value,
-      });
+      // Handle other inputs
+      setValues({ ...values, [name]: value });
+      console.log(values);
     }
-    // }
-    // console.log(profile);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (title === "register") {
-      // * Register user
+      //* Register user
       // Check if all fields are filled
       if (
-        !fullname ||
-        !email ||
-        !phone_number ||
-        !password ||
+        !values.fullname ||
+        !values.email ||
+        !values.phone_number ||
+        !values.password ||
         !confirm_password
       ) {
         setError("Semua data harus diisi!");
@@ -63,32 +51,52 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
       }
 
       // Check if password and confirm password match
-      if (password !== confirm_password) {
+      if (values.password !== confirm_password) {
         setError("Password dan konfirmasi password harus sama!");
         return;
       }
       setError("");
 
-      // Store the profile data in local storage (without confirm_password)
-      saveProfile();
-      navigate("/login");
+      try {
+        //* Check wether the email is registered or not
+        const responseEmail = await checkUserByEmail(values.email);
+        // IF email is registered then send error message
+        if (responseEmail.status === 200) {
+          setError('Email is registered.');
+          throw new Error('Email is registered.');
+        } else {
+          const response = await createUser(values);
+          console.log("Login success, response: ", response);
+          navigate("/login");
+        }
+      } catch (error) {
+        // Check if the error is an AxiosError
+        if (error instanceof AxiosError) {
+          // Log the error message
+          console.error(error.response?.data?.message || "Registration failed.")
+        } else {
+          // Log the error if it wasn't an AxiosError
+          console.error("An unexpected error occurred: ", error);
+        }
+      }
+      
     } else {
-      // ** Login user
+      //* Login user
       const storedProfile = localStorage.getItem("userProfile");
       // Check if the user is registered
       if (storedProfile !== null) {
         const { email: storedEmail, password: storedPassword } =
           JSON.parse(storedProfile);
         // Check if the email and password match
-        if (email !== storedEmail) {
+        if (values.email !== storedEmail) {
           setError(
             "Tidak ada akun yang terdaftar, mohon daftar terlebih dahulu."
           );
           return;
-        } else if (password !== storedPassword) {
+        } else if (values.password !== storedPassword) {
           setError("Password yang Anda masukkan salah!");
         } else {
-          login();
+          // login();
           navigate("/");
         }
       } else {
@@ -126,7 +134,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           inputName: "fullname",
           isSelect: false,
           toggleHide: false,
-          handleChange: setFullname,
+          handleChange: handleInput,
           isRequired: true,
         },
         {
@@ -138,7 +146,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           inputName: "email",
           isSelect: false,
           toggleHide: false,
-          handleChange: setEmail,
+          handleChange: handleInput,
           isRequired: true,
         },
         {
@@ -148,9 +156,10 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           id: "phoneNumber",
           inputType: "text",
           inputName: "phone_number",
+          inputMode: "numeric",
           isSelect: true,
           toggleHide: false,
-          handleChange: setPhoneNumber,
+          handleChange: handleInput,
           isRequired: true,
         },
         {
@@ -162,7 +171,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           inputName: "password",
           isSelect: false,
           toggleHide: true,
-          handleChange: setPassword,
+          handleChange: handleInput,
           isRequired: true,
         },
         {
@@ -189,7 +198,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           inputName: "email",
           isSelect: false,
           toggleHide: false,
-          handleChange: setEmail,
+          handleChange: handleInput,
           isRequired: true,
         },
         {
@@ -201,7 +210,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           inputName: "password",
           isSelect: false,
           toggleHide: true,
-          handleChange: setPassword,
+          handleChange: handleInput,
           isRequired: true,
         },
       ];
@@ -225,6 +234,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
             id={form.id}
             inputType={form.inputType}
             inputName={form.inputName}
+            inputMode={form.inputMode}
             isSelect={form.isSelect}
             toggleHide={form.toggleHide}
             handleChange={form.handleChange}
