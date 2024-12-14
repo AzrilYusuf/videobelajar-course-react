@@ -21,7 +21,7 @@ const UserProfileForm = () => {
   // To check if the user is logged in and set time for message and error
   const navigate = useNavigate();
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("profile");
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
     if (!isLoggedIn) {
       navigate("/login");
     }
