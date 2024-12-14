@@ -5,26 +5,47 @@ import Label from "../../atoms/Label";
 import Input from "../../atoms/Input";
 import Button from "../../atoms/Button";
 import userImage from "../../../assets/img/user-profile-image.png";
-import { UserProfile } from "../../../interfaces/component.interface";
+import { UserData } from "../../../interfaces/component.interface";
+import { useAuthStore } from "../../../stores/authStore.tsx";
 import "./UserProfileForm.css";
+import { getUserByFullname } from "../../../services/user.service.ts";
 
 const UserProfileForm = () => {
-  const [values, setValues] = useState<UserProfile>(() => {
-    const storedProfile = localStorage.getItem("profile");
-    return storedProfile
-      ? JSON.parse(storedProfile)
-      : { fullname: "", email: "", phone_number: "", password: "" };
+  const { getUserData } = useAuthStore((state) => state);
+  const [values, setValues] = useState<UserData>(() => {
+    const storedUserData = getUserData();
+    return storedUserData;
   });
   const [error, setError] = useState<string>("");
   const [message, setMessage] = useState<string>("");
 
-  // To check if the user is logged in and set time for message and error
   const navigate = useNavigate();
+
   useEffect(() => {
+    // Check if the user is logged in
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     if (!isLoggedIn) {
       navigate("/login");
     }
+    // Get user data even if the page's reloaded
+    const getUserData = async () => {
+      const userFullname = localStorage.getItem("user");
+      if (userFullname) {
+        const responseFullname = await getUserByFullname(
+          JSON.parse(userFullname)
+        );
+        const data = responseFullname.data.filter(
+          (user: { fullname: string }) =>
+            user.fullname === JSON.parse(userFullname)
+        );
+        if (data.length > 0) {
+          setValues(data[0]);
+        }
+      } else {
+        navigate("/login");
+      }
+    };
+    getUserData();
     if (message || error) {
       const timeout = setTimeout(() => {
         setMessage("");
