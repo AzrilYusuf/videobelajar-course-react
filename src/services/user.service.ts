@@ -12,11 +12,21 @@ export const createUser = async (params: UserRegisterService) => {
 };
 
 // API endpoints to check if email is registered
-export const checkUserByEmail = async (email: string) => {
+export const getUserByEmail = async (email: string) => {
   return await axios.get(APIendpoint, {
     // For keyword search
     params: { email },
     // Set status to validate wether the email is valid
+    validateStatus: (status) => status === 200 || status === 404,
+  });
+};
+
+// API endpoints to check fullname
+export const getUserByFullname = async (fullname: string) => {
+  return await axios.get(APIendpoint, {
+    // For keyword search
+    params: { fullname },
+    // Set status to validate wether the fullname is valid
     validateStatus: (status) => status === 200 || status === 404,
   });
 };

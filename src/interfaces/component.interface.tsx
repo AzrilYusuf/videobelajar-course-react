@@ -87,15 +87,16 @@ export interface Cards {
 }
 
 // For authStore
+export interface UserData {
+  fullname: string;
+  email: string;
+  phone_number: string;
+}
+
   export interface AuthState {
     fullname: string;
     email: string;
     phone_number: string;
-    password: string;
-    setFullname: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    setEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    setPhoneNumber: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    setPassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    saveProfile: () => void;
-    login: () => boolean;
+    setUserData: (data: UserData) => void;
+    getUserData: () => UserData;
   }

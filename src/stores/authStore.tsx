@@ -1,38 +1,37 @@
-import React from "react";
 import { create } from "zustand";
-import { AuthState, UserProfile } from "../interfaces/component.interface";
+import { AuthState} from "../interfaces/component.interface";
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   fullname: "",
   email: "",
   phone_number: "",
-  password: "",
-  setFullname: (e: React.ChangeEvent<HTMLInputElement>) => set(() => ({ fullname: e.target.value })),
-  setEmail: (e: React.ChangeEvent<HTMLInputElement>) => set(() => ({ email: e.target.value })),
-  setPhoneNumber: (e: React.ChangeEvent<HTMLInputElement>) => set(() => ({ phone_number: e.target.value })),
-  setPassword: (e: React.ChangeEvent<HTMLInputElement>) => set(() => ({ password: e.target.value })),
-  saveProfile: () =>
-    set((state) => {
-      const userData: UserProfile = {
-        fullname: state.fullname,
-        email: state.email,
-        phone_number: state.phone_number,
-        password: state.password,
-      };
-      localStorage.setItem("userProfile", JSON.stringify(userData));
-      console.log("Profile saved: ", userData);
-      return state;
-    }),
-    login: () => {
-        const { email, password } = get();
-        const storedProfile = localStorage.getItem("userProfile");
-        if (storedProfile) {
-            const { email: storedEmail, password: storedPassword } = JSON.parse(storedProfile);
-            if (email === storedEmail && password === storedPassword) {
-                localStorage.setItem("isLoggedIn", "true");
-                return true;
-            }
-        }
-        return false;
-    },
+  setUserData: (data) => {
+    set(() => ({
+      fullname: data.fullname,
+      email: data.email,
+      phone_number: data.phone_number,
+    }));
+    localStorage.setItem(
+      "user",
+      JSON.stringify(data.fullname)
+    );
+    localStorage.setItem("isLoggedIn", "true");
+  },
+  getUserData: () => {
+    const storedUserData = get();
+    return storedUserData;
+  }
+  // login: () => {
+  //   const { email, password } = get();
+  //   const storedProfile = localStorage.getItem("userProfile");
+  //   if (storedProfile) {
+  //     const { email: storedEmail, password: storedPassword } =
+  //       JSON.parse(storedProfile);
+  //     if (email === storedEmail && password === storedPassword) {
+  //       localStorage.setItem("isLoggedIn", "true");
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // },
 }));

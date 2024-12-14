@@ -7,10 +7,10 @@ import {
   FormTypes,
   UserProfile,
 } from "../../../interfaces/component.interface.tsx";
-// import { useAuthStore } from "../../../stores/authStore.tsx";
+import { useAuthStore } from "../../../stores/authStore.tsx";
 import "./AuthForm.css";
 import {
-  checkUserByEmail,
+  getUserByEmail,
   createUser,
   getUser,
 } from "../../../services/user.service.ts";
@@ -27,6 +27,8 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
+  const { setUserData } = useAuthStore(state => state);
+
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -36,7 +38,6 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
     } else {
       // Handle other inputs
       setValues({ ...values, [name]: value });
-      // console.log(values);
     }
   };
 
@@ -66,14 +67,13 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
 
       try {
         //* Check wether the email is registered or not
-        const responseEmail = await checkUserByEmail(values.email);
+        const responseEmail = await getUserByEmail(values.email);
         // If email is registered then send error message
         if (responseEmail.status === 200) {
           setError("Email is registered.");
           throw new Error("Email is registered.");
         } else {
-          const response = await createUser(values);
-          console.log("Register success, response: ", response);
+          await createUser(values);
           navigate("/login");
         }
       } catch (error) {
@@ -98,7 +98,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
 
       try {
         //* Check wether the email is registered or not
-        const responseEmail = await checkUserByEmail(values.email);
+        const responseEmail = await getUserByEmail(values.email);
         if (responseEmail.status === 200) {
           const data = responseEmail.data.filter(
             (user: { email: string }) => user.email === values.email
@@ -111,12 +111,8 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
               userData.data.email === values.email &&
               userData.data.password === values.password
             ) {
-              // Store user's fullname and set isLoggedIn to true
-              localStorage.setItem(
-                "user",
-                JSON.stringify(userData.data.fullname)
-              );
-              localStorage.setItem("isLoggedIn", "true");
+              // Store user data in state manager and localstorage
+              setUserData(userData.data);
               navigate("/");
             } else {
               setError("Password salah! Tolong masukkan password yang benar.");
