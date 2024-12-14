@@ -3,10 +3,17 @@ import { useNavigate } from "react-router-dom";
 import TitleForm from "../../molecules/title-form/TitleForm";
 import InputForm from "../../molecules/input-form/InputForm";
 import AuthButton from "../../molecules/auth-button/AuthButton";
-import { FormTypes, UserProfile } from "../../../interfaces/component.interface.tsx";
+import {
+  FormTypes,
+  UserProfile,
+} from "../../../interfaces/component.interface.tsx";
 // import { useAuthStore } from "../../../stores/authStore.tsx";
 import "./AuthForm.css";
-import { checkUserByEmail, createUser } from "../../../services/user.service.ts";
+import {
+  checkUserByEmail,
+  createUser,
+  getUser,
+} from "../../../services/user.service.ts";
 import { AxiosError } from "axios";
 
 const AuthForm: React.FC<{ title: string }> = ({ title }) => {
@@ -29,7 +36,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
     } else {
       // Handle other inputs
       setValues({ ...values, [name]: value });
-      console.log(values);
+      // console.log(values);
     }
   };
 
@@ -60,49 +67,80 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
       try {
         //* Check wether the email is registered or not
         const responseEmail = await checkUserByEmail(values.email);
-        // IF email is registered then send error message
+        // If email is registered then send error message
         if (responseEmail.status === 200) {
-          setError('Email is registered.');
-          throw new Error('Email is registered.');
+          setError("Email is registered.");
+          throw new Error("Email is registered.");
         } else {
           const response = await createUser(values);
-          console.log("Login success, response: ", response);
+          console.log("Register success, response: ", response);
           navigate("/login");
         }
       } catch (error) {
         // Check if the error is an AxiosError
         if (error instanceof AxiosError) {
           // Log the error message
-          console.error(error.response?.data?.message || "Registration failed.")
+          console.error(
+            error.response?.data?.message || "Registration failed."
+          );
         } else {
           // Log the error if it wasn't an AxiosError
           console.error("An unexpected error occurred: ", error);
         }
       }
-      
     } else {
       //* Login user
-      const storedProfile = localStorage.getItem("userProfile");
-      // Check if the user is registered
-      if (storedProfile !== null) {
-        const { email: storedEmail, password: storedPassword } =
-          JSON.parse(storedProfile);
-        // Check if the email and password match
-        if (values.email !== storedEmail) {
-          setError(
-            "Tidak ada akun yang terdaftar, mohon daftar terlebih dahulu."
+      // Ceck if all fields are filled
+      if (!values.email || !values.password) {
+        setError("Semua data harus diisi!");
+        return;
+      }
+
+      try {
+        //* Check wether the email is registered or not
+        const responseEmail = await checkUserByEmail(values.email);
+        if (responseEmail.status === 200) {
+          const data = responseEmail.data.filter(
+            (user: { email: string }) => user.email === values.email
           );
-          return;
-        } else if (values.password !== storedPassword) {
-          setError("Password yang Anda masukkan salah!");
+          // Make sure the email is valid
+          if (data.length > 0) {
+            const userData = await getUser(data[0].id);
+            // Check the credential
+            if (
+              userData.data.email === values.email &&
+              userData.data.password === values.password
+            ) {
+              // Store user's fullname and set isLoggedIn to true
+              localStorage.setItem(
+                "user",
+                JSON.stringify(userData.data.fullname)
+              );
+              localStorage.setItem("isLoggedIn", "true");
+              navigate("/");
+            } else {
+              setError("Password salah! Tolong masukkan password yang benar.");
+              throw new Error(
+                "Password is incorrect! Please input correct password."
+              );
+            }
+          } else {
+            setError("Email tidak terdaftar! Tolong daftar terlebih dahulu.");
+            throw new Error("Email is not registered! Please register first.");
+          }
         } else {
-          // login();
-          navigate("/");
+          setError("Email tidak terdaftar! Tolong daftar terlebih dahulu.");
+          throw new Error("Email is not registered! Please register first.");
         }
-      } else {
-        setError(
-          "Tidak ada akun yang terdaftar, mohon daftar terlebih dahulu."
-        );
+      } catch (error) {
+        // Check if the error is an AxiosError
+        if (error instanceof AxiosError) {
+          // Log the error message
+          console.error(error.response?.data?.message || "Login failed.");
+        } else {
+          // Log the error if it wasn't an AxiosError
+          console.error("An unexpected error occurred: ", error);
+        }
       }
     }
   };
