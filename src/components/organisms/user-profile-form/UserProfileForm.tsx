@@ -6,12 +6,12 @@ import Input from "../../atoms/Input";
 import Button from "../../atoms/Button";
 import userImage from "../../../assets/img/user-profile-image.png";
 import { UserData } from "../../../interfaces/component.interface";
-import { useAuthStore } from "../../../stores/authStore.tsx";
+import { useUserStore } from "../../../stores/userStore.tsx";
 import "./UserProfileForm.css";
 import { getUserByFullname } from "../../../services/user.service.ts";
 
 const UserProfileForm = () => {
-  const { getUserData } = useAuthStore((state) => state);
+  const { setUserData, getUserData } = useUserStore((state) => state);
   const [values, setValues] = useState<UserData>(() => {
     const storedUserData = getUserData();
     return storedUserData;
@@ -28,24 +28,33 @@ const UserProfileForm = () => {
       navigate("/login");
     }
     // Get user data even if the page's reloaded
-    const getUserData = async () => {
-      const userFullname = localStorage.getItem("user");
+    const fetchUser = async () => {
+      // Get the fullname from the local storage using zustand's getState()
+      const userFullname = useUserStore.getState().fullname;
       if (userFullname) {
-        const responseFullname = await getUserByFullname(
-          JSON.parse(userFullname)
-        );
-        const data = responseFullname.data.filter(
-          (user: { fullname: string }) =>
-            user.fullname === JSON.parse(userFullname)
-        );
-        if (data.length > 0) {
-          setValues(data[0]);
+        try {
+          // Get user data by fullname
+          const responseFullname = await getUserByFullname(userFullname);
+          // Make sure the data is match
+          const data = responseFullname.data.filter(
+            (user: { fullname: string }) => user.fullname === userFullname
+          );
+          // Make sure the data is not empty
+          if (data.length > 0) {
+            // Set the email and phone_number because they are not stored in the local storage(sensitive data)
+            setValues(data[0]);
+            // Set the fullname in the local storage (less sensitive data)
+            setUserData(data[0]);
+          }
+        } catch (error) {
+          console.error(error);
         }
       } else {
         navigate("/login");
       }
     };
-    getUserData();
+    fetchUser();
+
     if (message || error) {
       const timeout = setTimeout(() => {
         setMessage("");
@@ -58,7 +67,6 @@ const UserProfileForm = () => {
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

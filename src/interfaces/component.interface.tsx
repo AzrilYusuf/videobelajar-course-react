@@ -88,12 +88,13 @@ export interface Cards {
 
 // For authStore
 export interface UserData {
+  id?: number;
   fullname: string;
   email: string;
   phone_number: string;
 }
 
-  export interface AuthState {
+  export interface UserStoreState {
     fullname: string;
     email: string;
     phone_number: string;

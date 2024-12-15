@@ -7,7 +7,7 @@ import {
   FormTypes,
   UserProfile,
 } from "../../../interfaces/component.interface.tsx";
-import { useAuthStore } from "../../../stores/authStore.tsx";
+import { useUserStore } from "../../../stores/userStore.tsx";
 import "./AuthForm.css";
 import {
   getUserByEmail,
@@ -27,7 +27,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
-  const { setUserData } = useAuthStore(state => state);
+  const { setUserData } = useUserStore(state => state);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
