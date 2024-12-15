@@ -7,7 +7,7 @@ import {
   FormTypes,
   UserProfile,
 } from "../../../interfaces/component.interface.tsx";
-import { useUserStore } from "../../../stores/userStore.tsx";
+import { useUserStore } from "../../../stores/userStore.ts";
 import "./AuthForm.css";
 import {
   getUserByEmail,
