@@ -6,7 +6,7 @@ import Input from "../../atoms/Input";
 import Button from "../../atoms/Button";
 import userImage from "../../../assets/img/user-profile-image.png";
 import { UserData } from "../../../interfaces/component.interface";
-import { useUserStore } from "../../../stores/userStore.tsx";
+import { useUserStore } from "../../../stores/userStore.ts";
 import "./UserProfileForm.css";
 import { getUserByFullname } from "../../../services/user.service.ts";
 
