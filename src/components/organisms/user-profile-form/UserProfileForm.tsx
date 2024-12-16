@@ -7,11 +7,11 @@ import Button from "../../atoms/Button";
 import userImage from "../../../assets/img/user-profile-image.png";
 import { UserData } from "../../../interfaces/component.interface";
 import { useUserStore } from "../../../stores/userStore.ts";
+import { getUserByFullname, updateUser } from "../../../services/user.service.ts";
 import "./UserProfileForm.css";
-import { getUserByFullname } from "../../../services/user.service.ts";
 
 const UserProfileForm = () => {
-  const { setUserData, getUserData } = useUserStore((state) => state);
+  const { id, avatar_url, setUserData, getUserData } = useUserStore((state) => state);
   const [values, setValues] = useState<UserData>(() => {
     const storedUserData = getUserData();
     return storedUserData;
@@ -75,14 +75,21 @@ const UserProfileForm = () => {
       setError("Semua data harus diisi!");
       return;
     }
-    localStorage.setItem("profile", JSON.stringify(values));
+    if (id === undefined) {
+      navigate('/login');
+      return;
+    }
+    // Update fullname in local storage and state manager
+    setUserData(values);
+    // Update data in database
+    updateUser(id, values);
     setMessage("Profil berhasil diubah!");
   };
 
   return (
     <div className="user-profile-form">
       <div style={{ display: "flex", gap: "1.5em" }}>
-        <Image src={userImage} alt="User profile image" />
+        <Image src={userImage ? userImage : avatar_url} alt="User profile image" />
         <div style={{ display: "flex", flexDirection: "column", gap: "0.4em" }}>
           <h3>{values.fullname}</h3>
           <p style={{ color: "hsl(0, 0%, 0%)" }}>{values.email}</p>
