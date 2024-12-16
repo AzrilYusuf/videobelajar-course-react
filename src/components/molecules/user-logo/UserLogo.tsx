@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Image from "../../atoms/Image";
 import homeIcon from "../../../assets/svg/home-icon.svg";
 import Avatar from "../../../assets/img/avatar.png";
+import { useUserStore } from "../../../stores/userStore.ts";
 import "./UserLogo.css";
 
 const UserLogo: React.FC = () => {
@@ -10,6 +11,7 @@ const UserLogo: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const popupRef = useRef<HTMLDivElement>(null);
+  const { clearUserData } = useUserStore((state) => state);
 
   const togglePopup = () => {
     setIsPopupOpen((prev) => !prev);
@@ -25,6 +27,12 @@ const UserLogo: React.FC = () => {
   // Close the popup when an item is clicked
   const handleItemClick = () => {
     setIsPopupOpen(false);
+  };
+
+  // Log out
+  const handleLogout = () => {
+    clearUserData();
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -57,7 +65,7 @@ const UserLogo: React.FC = () => {
             }>Profile Saya</li>
             <li onClick={handleItemClick}>Kelas Saya</li>
             <li onClick={handleItemClick}>Pesanan Saya</li>
-            <li onClick={handleItemClick}>Keluar</li>
+            <li onClick={handleLogout}>Keluar</li>
           </ul>
         </div>
       )}

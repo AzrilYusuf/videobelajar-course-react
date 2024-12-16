@@ -27,7 +27,7 @@ export interface ButtonProps {
 
 export interface ImageProps {
   className?: string;
-  src: string;
+  src: string | undefined;
   alt: string;
   style?: React.CSSProperties;
   handleClick?: React.MouseEventHandler<HTMLImageElement>;
@@ -92,12 +92,16 @@ export interface UserData {
   fullname: string;
   email: string;
   phone_number: string;
+  avatar_url?: string;
 }
 
   export interface UserStoreState {
+    id?: number;
     fullname: string;
     email: string;
     phone_number: string;
+    avatar_url?: string;
     setUserData: (data: UserData) => void;
     getUserData: () => UserData;
+    clearUserData: () => void;
   }
