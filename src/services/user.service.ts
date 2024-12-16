@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserRegisterService } from "../interfaces/service.interface";
+import { UserRegisterService, UserUpdateService } from "../interfaces/service.interface";
 const APIendpoint = import.meta.env.VITE_MOCK_API_URL + "/users";
 
 /**
@@ -17,7 +17,9 @@ export const getUserByEmail = async (email: string) => {
     // For keyword search
     params: { email },
     // Set status to validate wether the email is valid
-    validateStatus: (status) => status === 200 || status === 404,
+    validateStatus: (status) => {
+      return (status >= 200 && status < 300) || status === 404;
+    } 
   });
 };
 
@@ -27,7 +29,9 @@ export const getUserByFullname = async (fullname: string) => {
     // For keyword search
     params: { fullname },
     // Set status to validate wether the fullname is valid
-    validateStatus: (status) => status === 200 || status === 404,
+    validateStatus: (status) => {
+      return (status >= 200 && status < 300) || status === 404;
+    } 
   });
 };
 
@@ -35,3 +39,8 @@ export const getUserByFullname = async (fullname: string) => {
 export const getUser = async (userId: number) => {
   return await axios.get(`${APIendpoint}/${userId}`);
 };
+
+// API endpoints to update user profile
+export const updateUser = async (userId: number, params: UserUpdateService) => {
+  return await axios.put(`${APIendpoint}/${userId}`, params);
+}
