@@ -7,11 +7,22 @@ import Button from "../../atoms/Button";
 import userImage from "../../../assets/img/user-profile-image.png";
 import { UserData } from "../../../interfaces/component.interface";
 import { useUserStore } from "../../../stores/userStore.ts";
-import { getUserByFullname, updateUser } from "../../../services/user.service.ts";
+import {
+  getUserByFullname,
+  updateUser,
+} from "../../../services/user.service.ts";
 import "./UserProfileForm.css";
 
 const UserProfileForm = () => {
-  const { id, avatar_url, setUserData, getUserData } = useUserStore((state) => state);
+  const {
+    id,
+    fullname,
+    email,
+    phone_number,
+    avatar_url,
+    setUserData,
+    getUserData,
+  } = useUserStore((state) => state);
   const [values, setValues] = useState<UserData>(() => {
     const storedUserData = getUserData();
     return storedUserData;
@@ -41,10 +52,16 @@ const UserProfileForm = () => {
           );
           // Make sure the data is not empty
           if (data.length > 0) {
-            // Set the email and phone_number because they are not stored in the local storage(sensitive data)
-            setValues(data[0]);
-            // Set the fullname in the local storage (less sensitive data)
+            // Set data in the state manager and also set fullname in the local storage (less sensitive data)
             setUserData(data[0]);
+            // Set values so that when the user changes the input, the value will be updated
+            setValues({
+              id: data[0].id,
+              fullname: data[0].fullname,
+              email: data[0].email,
+              phone_number: data[0].phone_number,
+              avatar_url: data[0].avatar_url,
+            });
           }
         } catch (error) {
           console.error(error);
@@ -76,7 +93,7 @@ const UserProfileForm = () => {
       return;
     }
     if (id === undefined) {
-      navigate('/login');
+      navigate("/login");
       return;
     }
     // Update fullname in local storage and state manager
@@ -89,10 +106,13 @@ const UserProfileForm = () => {
   return (
     <div className="user-profile-form">
       <div style={{ display: "flex", gap: "1.5em" }}>
-        <Image src={userImage ? userImage : avatar_url} alt="User profile image" />
+        <Image
+          src={userImage ? userImage : avatar_url}
+          alt="User profile image"
+        />
         <div style={{ display: "flex", flexDirection: "column", gap: "0.4em" }}>
-          <h3>{values.fullname}</h3>
-          <p style={{ color: "hsl(0, 0%, 0%)" }}>{values.email}</p>
+          <h3>{fullname}</h3>
+          <p style={{ color: "hsl(0, 0%, 0%)" }}>{email}</p>
           <p style={{ color: "hsla(11, 92%, 55%, 1)", cursor: "pointer" }}>
             Ganti Foto Profil
           </p>
@@ -114,7 +134,7 @@ const UserProfileForm = () => {
             type="text"
             name="fullname"
             className="form-control"
-            value={values.fullname}
+            value={values.fullname ? values.fullname : fullname}
             handleChange={handleInput}
           />
           <Label htmlFor="fullname" className="form-label" isRequired={false}>
@@ -127,7 +147,7 @@ const UserProfileForm = () => {
             type="email"
             name="email"
             className="form-control"
-            value={values.email}
+            value={values.email ? values.email : email}
             handleChange={handleInput}
           />
           <Label htmlFor="email" className="form-label" isRequired={false}>
@@ -148,7 +168,7 @@ const UserProfileForm = () => {
             type="tel"
             name="phone_number"
             className="form-control"
-            value={values.phone_number}
+            value={values.phone_number ? values.phone_number : phone_number}
             handleChange={handleInput}
           />
           <Label htmlFor="phone" className="form-label" isRequired={false}>
