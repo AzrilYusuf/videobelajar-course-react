@@ -1,10 +1,14 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import Image from "../../atoms/Image";
 import userIcon from "../../../assets/svg/user-icon-active.svg";
 import userClass from "../../../assets/svg/user-class-nonactive.svg";
 import userOrder from "../../../assets/svg/user-order-nonactive.svg";
 import "./ProfileMenu.css";
 
-const ProfileMenu = () => {
+const ProfileMenu: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "1.5em" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.625em" }}>
@@ -12,7 +16,7 @@ const ProfileMenu = () => {
         <p>Ubah data diri Anda</p>
       </div>
       <ul className="profile-menu">
-        <li className="active">
+        <li className="active" onClick={() => navigate("/user?tab=profile")}>
           <Image src={userIcon} alt="User icon" /> Profil Saya
         </li>
         <li>

@@ -5,7 +5,7 @@ import Label from "../../atoms/Label";
 import Input from "../../atoms/Input";
 import Button from "../../atoms/Button";
 import userImage from "../../../assets/img/user-profile-image.png";
-import { UserData } from "../../../interfaces/component.interface";
+import { UserData } from "../../../interfaces/store.interface.ts";
 import { useUserStore } from "../../../stores/userStore.ts";
 import {
   getUserByFullname,
@@ -13,7 +13,7 @@ import {
 } from "../../../services/user.service.ts";
 import "./UserProfileForm.css";
 
-const UserProfileForm = () => {
+const UserProfileForm: React.FC = () => {
   const {
     id,
     fullname,

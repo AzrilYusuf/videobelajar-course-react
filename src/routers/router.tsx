@@ -5,6 +5,7 @@ import RegisterPage from "../pages/Register";
 import LoginPage from "../pages/Login";
 import HomePage from "../pages/Home";
 import UserProfilePage from "../pages/UserProfile";
+import AdminDashboard from "../pages/admin/AdminDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -16,10 +17,15 @@ export const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/user/profile",
+        path: "/user",
         element: <UserProfilePage />,
       },
     ],
+  },
+  {
+    path: "/admin",
+    element: <AdminDashboard />,
+    // errorElement: <ErrorPage />,
   },
   {
     path: "/",
