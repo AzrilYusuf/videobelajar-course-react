@@ -35,10 +35,10 @@ export interface ImageProps {
 
 // Used in molecule and organism (AuthForm)
 export interface FormTypes {
-  key: number;
+  key?: number;
   htmlFor: string;
   labelChildren: string;
-  id: string;
+  id?: string;
   inputType: string;
   inputName: string;
   inputMode?: "email" | "search" | "text" | "numeric" | "none" | "tel" | "url" | "decimal";
@@ -71,6 +71,7 @@ export interface UserProfile {
   email: string;
   phone_number: string;
   password: string;
+  role: string;
 }
 
 // Used in organism
@@ -85,23 +86,3 @@ export interface Cards {
   rating: string;
   price: string;
 }
-
-// For authStore
-export interface UserData {
-  id?: number;
-  fullname: string;
-  email: string;
-  phone_number: string;
-  avatar_url?: string;
-}
-
-  export interface UserStoreState {
-    id?: number;
-    fullname: string;
-    email: string;
-    phone_number: string;
-    avatar_url?: string;
-    setUserData: (data: UserData) => void;
-    getUserData: () => UserData;
-    clearUserData: () => void;
-  }

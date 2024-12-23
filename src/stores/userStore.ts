@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { UserStoreState } from "../interfaces/component.interface";
 import { persist } from "zustand/middleware";
+import { UserStoreState } from "../interfaces/store.interface";
 
 export const useUserStore = create<UserStoreState>()(
   //* To ensure the user data persists across reloads
@@ -13,6 +13,7 @@ export const useUserStore = create<UserStoreState>()(
       email: "",
       phone_number: "",
       avatar_url: "",
+      role: "",
       setUserData: (data) => {
         set(() => ({
           id: data.id,
@@ -20,6 +21,7 @@ export const useUserStore = create<UserStoreState>()(
           email: data.email,
           phone_number: data.phone_number,
           avatar_url: data.avatar_url,
+          role: data.role,
         }));
         localStorage.setItem("isLoggedIn", "true");
       },
@@ -35,6 +37,7 @@ export const useUserStore = create<UserStoreState>()(
           email: "",
           phone_number: "",
           avatar_url: "",
+          role: "",
         }));
         localStorage.setItem("isLoggedIn", "false");
       }
@@ -46,6 +49,7 @@ export const useUserStore = create<UserStoreState>()(
       partialize: (state) => ({ // Persist only spesific data
         fullname: state.fullname,
         avatar_url: state.avatar_url,
+        role: state.role,
       }),
       
     }
