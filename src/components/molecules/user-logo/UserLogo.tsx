@@ -11,8 +11,15 @@ const UserLogo: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const popupRef = useRef<HTMLDivElement>(null);
-  const { clearUserData } = useUserStore((state) => state);
-
+  const { role, clearUserData } = useUserStore((state) => state);
+  
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  
   const togglePopup = () => {
     setIsPopupOpen((prev) => !prev);
   };
@@ -35,12 +42,14 @@ const UserLogo: React.FC = () => {
     navigate("/login");
   };
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  // Render if the user's role is admin
+  const renderDashboard = () => {
+    if (role === "admin") {
+      return <li onClick={() => {navigate("/admin?tab=dashboard"); handleItemClick()}}>Dashboard</li>;
+    } else {
+      return null;
+    }
+  };
 
   return (
     <div className="user-logo" ref={popupRef}>
@@ -60,9 +69,10 @@ const UserLogo: React.FC = () => {
       {isPopupOpen && (
         <div className="popup-menu">
           <ul>
-            <li onClick={() => {navigate("/user/profile");
+            <li onClick={() => {navigate("/user?tab=profile");
               handleItemClick();}
             }>Profile Saya</li>
+            {renderDashboard()}
             <li onClick={handleItemClick}>Kelas Saya</li>
             <li onClick={handleItemClick}>Pesanan Saya</li>
             <li onClick={handleLogout}>Keluar</li>

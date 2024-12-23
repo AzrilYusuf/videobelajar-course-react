@@ -5,8 +5,8 @@ import InputForm from "../../molecules/input-form/InputForm";
 import AuthButton from "../../molecules/auth-button/AuthButton";
 import {
   FormTypes,
-  UserProfile,
 } from "../../../interfaces/component.interface.tsx";
+import { Role, UserRegisterService } from "../../../interfaces/service.interface.ts";
 import { useUserStore } from "../../../stores/userStore.ts";
 import "./AuthForm.css";
 import {
@@ -17,11 +17,12 @@ import {
 import { AxiosError } from "axios";
 
 const AuthForm: React.FC<{ title: string }> = ({ title }) => {
-  const [values, setValues] = useState<UserProfile>({
+  const [values, setValues] = useState<UserRegisterService>({
     fullname: "",
     email: "",
     phone_number: "",
     password: "",
+    role: "user" as Role,
   });
   const [confirm_password, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<string>("");

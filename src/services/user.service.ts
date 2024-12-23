@@ -40,7 +40,16 @@ export const getUser = async (userId: number) => {
   return await axios.get(`${APIendpoint}/${userId}`);
 };
 
+export const getAllUsers = async () => {
+  return await axios.get(APIendpoint);
+}
+
 // API endpoints to update user profile
 export const updateUser = async (userId: number, params: UserUpdateService) => {
   return await axios.put(`${APIendpoint}/${userId}`, params);
+}
+
+// API endpoints to delete user
+export const deleteUser = async (userId: number) => {
+  return await axios.delete(`${APIendpoint}/${userId}`);
 }
