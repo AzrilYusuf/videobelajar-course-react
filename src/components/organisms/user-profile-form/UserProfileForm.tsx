@@ -136,7 +136,8 @@ const UserProfileForm: React.FC = () => {
             className="form-control"
             value={values.fullname ? values.fullname : fullname}
             handleChange={handleInput}
-          />
+            isRequired={true}
+            />
           <Label htmlFor="fullname" className="form-label" isRequired={false}>
             Nama Lengkap
           </Label>
@@ -149,7 +150,8 @@ const UserProfileForm: React.FC = () => {
             className="form-control"
             value={values.email ? values.email : email}
             handleChange={handleInput}
-          />
+            isRequired={true}
+            />
           <Label htmlFor="email" className="form-label" isRequired={false}>
             E-Mail
           </Label>
@@ -170,6 +172,7 @@ const UserProfileForm: React.FC = () => {
             className="form-control"
             value={values.phone_number ? values.phone_number : phone_number}
             handleChange={handleInput}
+            isRequired={true}
           />
           <Label htmlFor="phone" className="form-label" isRequired={false}>
             No. Hp
