@@ -16,7 +16,9 @@ const InputForm: React.FC<FormTypes> = ({
   isSelect,
   toggleHide,
   placeholder,
+  value,
   handleChange,
+  checked,
   isRequired,
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -27,7 +29,11 @@ const InputForm: React.FC<FormTypes> = ({
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <Label htmlFor={htmlFor} children={labelChildren} isRequired={isRequired} />
+      <Label
+        htmlFor={htmlFor}
+        children={labelChildren}
+        isRequired={isRequired}
+      />
       <div style={{ display: "flex", alignItems: "center" }}>
         {isSelect === true ? (
           <div className="pnumber-select" style={{ width: "100%" }}>
@@ -44,8 +50,10 @@ const InputForm: React.FC<FormTypes> = ({
               inputMode={inputMode}
               style={{ width: "100%" }}
               placeholder={placeholder}
+              value={value}
               handleChange={handleChange}
-            />
+              isRequired={isRequired}
+              />
           </div>
         ) : (
           <Input
@@ -56,7 +64,10 @@ const InputForm: React.FC<FormTypes> = ({
             name={inputName}
             style={{ flex: "1" }}
             placeholder={placeholder}
+            value={value}
             handleChange={handleChange}
+            checked={checked}
+            isRequired={isRequired}
           />
         )}
         {toggleHide === true && (

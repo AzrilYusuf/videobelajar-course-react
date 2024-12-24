@@ -7,8 +7,10 @@ export interface InputProps {
   className?: string;
   style?: React.CSSProperties;
   placeholder?: string;
-  value?: string;
+  value?: string | number | readonly string[];
   handleChange: React.ChangeEventHandler<HTMLInputElement>; // Define the type for handleChange
+  checked?: boolean;
+  isRequired: boolean;
 }
 
 export interface LabelProps {
@@ -45,7 +47,9 @@ export interface FormTypes {
   isSelect?: boolean;
   toggleHide?: boolean;
   placeholder?: string;
+  value?: string | number | readonly string[];
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  checked?: boolean;
   isRequired: boolean;
 }
 

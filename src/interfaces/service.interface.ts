@@ -4,6 +4,7 @@ export enum Role {
 }
 
 export interface UserRegisterService {
+  id?: number;
   fullname: string;
   email: string;
   phone_number: string;
