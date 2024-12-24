@@ -33,10 +33,10 @@ const AdminDashboard: React.FC = () => {
     const loadDashboardData = async () => {
       try {
         const usersData: { data: UserData[] } = await getAllUsers();
-        const admins = usersData.data.filter(
+        const admins: UserData[] = usersData.data.filter(
           (data) => data.role === "admin"
         );
-        const users = usersData.data.filter(
+        const users: UserData[] = usersData.data.filter(
 			(data) => data.role !== "admin"
         );
 

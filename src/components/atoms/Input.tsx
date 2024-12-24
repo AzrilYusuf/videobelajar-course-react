@@ -9,8 +9,10 @@ const Input: React.FC<InputProps> = ({
   className,
   style,
   placeholder,
+  checked,
   value,
   handleChange,
+  isRequired
 }) => {
   return (
     <input
@@ -23,7 +25,8 @@ const Input: React.FC<InputProps> = ({
       placeholder={placeholder}
       value={value}
       onChange={handleChange}
-      required
+      checked={checked}
+      required={isRequired}
     />
   );
 };

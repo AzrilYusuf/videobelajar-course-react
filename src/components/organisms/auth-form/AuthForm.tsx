@@ -13,6 +13,7 @@ import {
   getUserByEmail,
   createUser,
   getUser,
+  getUserByFullname,
 } from "../../../services/user.service.ts";
 import { AxiosError } from "axios";
 
@@ -68,11 +69,12 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
 
       try {
         //* Check wether the email is registered or not
+        const responseFullname = await getUserByFullname(values.fullname);
         const responseEmail = await getUserByEmail(values.email);
         // If email is registered then send error message
-        if (responseEmail.status === 200) {
-          setError("Email is registered.");
-          throw new Error("Email is registered.");
+        if (responseFullname.status === 200 || responseEmail.status === 200) {
+          setError("Fullname or Email have already been registered. Please use another one.");
+          throw new Error("Fullname or Email have already been registered.");
         } else {
           await createUser(values);
           navigate("/login");
@@ -84,6 +86,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
           console.error(
             error.response?.data?.message || "Registration failed."
           );
+          setError(error.response?.data?.message || "Registration failed.");
         } else {
           // Log the error if it wasn't an AxiosError
           console.error("An unexpected error occurred: ", error);
@@ -134,6 +137,7 @@ const AuthForm: React.FC<{ title: string }> = ({ title }) => {
         if (error instanceof AxiosError) {
           // Log the error message
           console.error(error.response?.data?.message || "Login failed.");
+          setError(error.response?.data?.message || "Login failed.");
         } else {
           // Log the error if it wasn't an AxiosError
           console.error("An unexpected error occurred: ", error);

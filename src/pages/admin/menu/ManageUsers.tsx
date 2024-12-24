@@ -6,51 +6,65 @@ import {
   updateUser,
   getUserByFullname,
   getUser,
-  deleteUser,
+  getUserByEmail,
+  // deleteUser,
 } from "../../../services/user.service";
 import Button from "../../../components/atoms/Button";
-// import { useDispatch, useSelector } from 'react-redux';
-// import { removeAdmin, removeUser, setAllAdmin, setAllUsers } from '../../../redux/slices/adminSlice';
 import { useAdminStore } from "../../../stores/adminStore";
 import {
   Role,
   UserRegisterService,
 } from "../../../interfaces/service.interface";
 import { FormTypes } from "../../../interfaces/component.interface";
+import { UserData } from "../../../interfaces/store.interface";
+import { AxiosError } from "axios";
 
 const ManageUsers: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOnEdit, setIsOnEdit] = useState(false);
-  const { setAllAdmins, setAllUsers } = useAdminStore();
-  // const admin = useSelector(state => state.admin.allAdmins);
-  // const users = useSelector(state => state.admin.allUsers);
-  const [usersList, setUsersList] = useState([]);
-
+  const { allAdmins, allUsers, setAllAdmins, setAllUsers } = useAdminStore();
+  const [usersList, setUsersList] = useState<UserData[]>([]);
   const [values, setValues] = useState<UserRegisterService>({
+    id: 0,
     fullname: "",
     email: "",
     phone_number: "",
     password: "",
     role: "user" as Role,
   });
+  const [error, setError] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
-    setUsersList(admin.concat(users));
-  }, [admin, users]);
+    setUsersList(allAdmins.concat(allUsers));
+
+    if (message || error) {
+      const timeout = setTimeout(() => {
+        setMessage("");
+        setError("");
+      }, 5000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [allAdmins, allUsers, message, error]);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.id === "username" || e.target.id === "password") {
-      setValues({ ...values, [e.target.id]: e.target.value });
+    if (e.target.name !== "role") {
+      setValues({ ...values, [e.target.name]: e.target.value });
+      console.log(values);
     } else {
       setValues({
         ...values,
-        [e.target.id]: e.target.checked ? "admin" : "user",
+        [e.target.name]: e.target.checked
+          ? ("admin" as Role)
+          : ("user" as Role),
       });
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    //* Update user
     if (!isLoading) {
       setIsLoading(true);
       if (isOnEdit) {
@@ -64,59 +78,78 @@ const ManageUsers: React.FC = () => {
               ...values,
               fullname: "",
             });
-            throw new Error("Username is used!");
+            setError("Fullname or Email is used!");
+            throw new Error("Fullname or Email is used!");
           } else {
-            await updateUser(values.id, values.fullname, values.password);
+            await updateUser(responseFullname.data[0].id, values);
+            setMessage("User is successfully updated!");
           }
         } catch (error) {
-          console.error(error);
-          toast.error(
-            error.message ? error.message : "Failed update data.",
-            toastDefault
-          );
+          if (error instanceof AxiosError) {
+            // Log the error message
+            console.error(error.response?.data?.message || "Failed to update user!");
+            setError(error.response?.data?.message || "Failed to update user!");
+          } else {
+            console.error("An unexpected error occurred: ", error);
+          }
         }
       } else {
+        //* Create user
         try {
-          const responseUsername = await getUsername(values.username);
-          if (responseUsername.status === 200) {
+          const responseFullname = await getUserByFullname(values.fullname);
+          const responseEmail = await getUserByEmail(values.email);
+          if (responseFullname.status === 200 || responseEmail.status === 200) {
             setValues({
               ...values,
-              username: "",
+              fullname: "",
+              email: "",
             });
-            throw new Error("Username is used!");
+            setError("Fullname or Email have already been registered. Please use another one.");
+            throw new Error("Fullname or Email have already been registered.");
           } else {
-            await createUser(values.username, values.password, values.role);
-            toast.success("User created successfully!", toastDefault);
+            await createUser(values);
+            setMessage("User is successfully created!");
             setValues({
-              id: "",
-              username: "",
+              fullname: "",
+              email: "",
+              phone_number: "",
               password: "",
-              role: null,
+              role: "user" as Role,
             });
           }
         } catch (error) {
-          console.error(error);
-          toast.error(
-            error.message ? error.message : "Failed to create user.",
-            toastDefault
-          );
+          if (error instanceof AxiosError) {
+            // Log the error message
+            console.error(error.response?.data?.message || "Failed to create user!");
+            setError(error.response?.data?.message || "Failed to create user!");
+          } else {
+            // Log the error if it wasn't an AxiosError
+            console.error("An unexpected error occurred: ", error);
+          }
         }
       }
 
       try {
-        const usersData = await getAllUser();
-        dispatch(
-          setAllAdmin(usersData.data.filter((data) => data.role === "admin"))
+        const usersData: { data: UserData[] } = await getAllUsers();
+        const admins: UserData[] = usersData.data.filter(
+          (data) => data.role === "admin"
         );
-        dispatch(
-          setAllUsers(usersData.data.filter((data) => data.role !== "admin"))
+        const users: UserData[] = usersData.data.filter(
+          (data) => data.role !== "admin"
         );
+        setAllAdmins(admins);
+        setAllUsers(users);
       } catch (error) {
-        console.error(error);
+        if (error instanceof AxiosError) {
+          console.error(error.message || "Failed to fetch data!");
+          setError(error.message || "Failed to fetch data!");
+        } else {
+          console.error("An unexpected error occurred: ", error);
+        }
       }
       setIsLoading(false);
     } else {
-      toast.info("Please Wait", toastDefault);
+      setMessage("Please Wait...");
     }
   };
 
@@ -132,6 +165,7 @@ const ManageUsers: React.FC = () => {
       toggleHide: false,
       handleChange: handleInput,
       isRequired: true,
+      value: values.fullname,
     },
     {
       key: 2,
@@ -144,6 +178,7 @@ const ManageUsers: React.FC = () => {
       toggleHide: false,
       handleChange: handleInput,
       isRequired: true,
+      value: values.email,
     },
     {
       key: 3,
@@ -157,6 +192,7 @@ const ManageUsers: React.FC = () => {
       toggleHide: false,
       handleChange: handleInput,
       isRequired: true,
+      value: values.phone_number,
     },
     {
       key: 4,
@@ -169,15 +205,22 @@ const ManageUsers: React.FC = () => {
       toggleHide: true,
       handleChange: handleInput,
       isRequired: true,
+      value: values.password,
     },
-    // {
-    //   id: "role",
-    //   name: "make the user an admin?",
-    //   inputType: "checkbox",
-    //   placeholder: "Enter Password",
-    //   checked: values.role === "admin" ? true : false,
-    //   required: false,
-    // },
+    {
+      key: 5,
+      htmlFor: "role",
+      labelChildren: "Role",
+      id: "role",
+      inputType: "checkbox",
+      inputName: "role",
+      isSelect: false,
+      toggleHide: false,
+      handleChange: handleInput,
+      checked: values.role === "admin" ? true : false,
+      isRequired: false,
+      value: values.role,
+    },
   ];
 
   return (
@@ -187,17 +230,21 @@ const ManageUsers: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <div className="form-box form-admin">
           {inputs.map((form) => (
-            <InputForm key={form.key}
-            htmlFor={form.htmlFor}
-            labelChildren={form.labelChildren}
-            id={form.id}
-            inputType={form.inputType}
-            inputName={form.inputName}
-            inputMode={form.inputMode}
-            isSelect={form.isSelect}
-            toggleHide={form.toggleHide}
-            handleChange={form.handleChange}
-            isRequired={form.isRequired} />
+            <InputForm
+              key={form.key}
+              htmlFor={form.htmlFor}
+              labelChildren={form.labelChildren}
+              id={form.id}
+              inputType={form.inputType}
+              inputName={form.inputName}
+              inputMode={form.inputMode}
+              isSelect={form.isSelect}
+              toggleHide={form.toggleHide}
+              value={form.value}
+              handleChange={form.handleChange}
+              checked={form.checked}
+              isRequired={form.isRequired}
+            />
           ))}
         </div>
         {isOnEdit ? (
@@ -211,10 +258,10 @@ const ManageUsers: React.FC = () => {
               handleClick={() => {
                 setIsOnEdit(false);
                 setValues({
-                    fullname: "",
-                    email: "",
-                    phone_number: "",
-                    password: "",
+                  fullname: "",
+                  email: "",
+                  phone_number: "",
+                  password: "",
                   role: "user" as Role,
                 });
               }}
@@ -226,6 +273,30 @@ const ManageUsers: React.FC = () => {
           <Button className="form-btn">
             {isLoading ? "Loading..." : "Create New User"}
           </Button>
+        )}
+        {message && (
+          <p
+            style={{
+              color: "green",
+              right: "20%",
+              bottom: "54.5%",
+              display: "block",
+              transition: "1s ease display",
+            }}
+          >
+            {message}
+          </p>
+        )}
+        {error && (
+          <p
+            style={{
+              color: "red",
+              right: "20%",
+              bottom: "54.5%",
+            }}
+          >
+            {error}
+          </p>
         )}
       </form>
       <h3>USERS LIST</h3>
@@ -241,11 +312,13 @@ const ManageUsers: React.FC = () => {
         {usersList?.map((user) => (
           <li key={user.id}>
             <p>{user.id}</p>
-            <p style={{ color: user.role === "admin" && "yellow" }}>
-              {user.username}
+            <p style={{ color: user.role === "admin" ? "yellow" : "white" }}>
+              {user.fullname}
             </p>
             {user.role === "admin" && (
-              <p style={{ marginLeft: "10px" }}>(Administrator)</p>
+              <p style={{ marginLeft: "10px", color: "red" }}>
+                (Administrator)
+              </p>
             )}
             <div className="button-wrapper">
               <Button
@@ -259,19 +332,27 @@ const ManageUsers: React.FC = () => {
                   const fetchUserData = async () => {
                     setIsLoading(true);
                     try {
-                      const response = await getUser(user.id);
-                      setValues({
-                        id: response.data.id,
-                        username: response.data.username,
-                        password: response.data.password,
-                        role: response.data.role,
-                      });
+                      if (user.id) {
+                        const response = await getUser(user.id);
+                        setValues({
+                          id: response.data.id,
+                          fullname: response.data.fullname,
+                          email: response.data.email,
+                          phone_number: response.data.phone_number,
+                          password: response.data.password,
+                          role: response.data.role,
+                        });
+                      } else {
+                        throw new Error("User ID is not found!");
+                      }
                     } catch (error) {
-                      console.error(error);
-                      toast.error(
-                        error.message ? error.message : "Failed fetch data",
-                        toastDefault
-                      );
+                      if (error instanceof AxiosError) {
+                        console.error(error.response?.data?.message || "Failed to fetch user data!");
+                        setError(error.response?.data?.message || "Failed to fetch user data!");
+                      } else {
+                        console.error("An unexpected error occurred: ", error);
+                      }
+                      
                     }
                     setIsLoading(false);
                   };
@@ -283,40 +364,40 @@ const ManageUsers: React.FC = () => {
               <Button
                 className="delete-btn"
                 handleClick={() => {
-                //   toast(
-                //     <ConfirmToast
-                //       questionText={
-                //         isLoading
-                //           ? "Loading..."
-                //           : `Are you sure you want to delete ${user.username}?`
-                //       }
-                //       handleConfirm={async () => {
-                //         setIsLoading(true);
-                //         try {
-                //           const response = await deleteUser(user.id);
-                //           console.log(response);
-                //           user.role !== "admin"
-                //             ? dispatch(removeUser(user.id))
-                //             : dispatch(removeAdmin(user.id));
-                //           toast.dismiss();
-                //           toast.info(
-                //             `Delete user with username : ${user.username}`,
-                //             toastDefault
-                //           );
-                //         } catch (error) {
-                //           console.error(error);
-                //           toast.error(
-                //             error.message
-                //               ? error.message
-                //               : "Failed to delete user.",
-                //             toastDefault
-                //           );
-                //         }
-                //         setIsLoading(false);
-                //       }}
-                //     />,
-                //     toastCustom
-                //   );
+                  //   toast(
+                  //     <ConfirmToast
+                  //       questionText={
+                  //         isLoading
+                  //           ? "Loading..."
+                  //           : `Are you sure you want to delete ${user.username}?`
+                  //       }
+                  //       handleConfirm={async () => {
+                  //         setIsLoading(true);
+                  //         try {
+                  //           const response = await deleteUser(user.id);
+                  //           console.log(response);
+                  //           user.role !== "admin"
+                  //             ? dispatch(removeUser(user.id))
+                  //             : dispatch(removeAdmin(user.id));
+                  //           toast.dismiss();
+                  //           toast.info(
+                  //             `Delete user with username : ${user.username}`,
+                  //             toastDefault
+                  //           );
+                  //         } catch (error) {
+                  //           console.error(error);
+                  //           toast.error(
+                  //             error.message
+                  //               ? error.message
+                  //               : "Failed to delete user.",
+                  //             toastDefault
+                  //           );
+                  //         }
+                  //         setIsLoading(false);
+                  //       }}
+                  //     />,
+                  //     toastCustom
+                  //   );
                 }}
               >
                 Delete
