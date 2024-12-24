@@ -26,6 +26,7 @@ const Newsletter: React.FC = () => {
             name="email"
             placeholder="Masukkan Email mu"
             handleChange={(e) => handleEmail(e)}
+            isRequired={true}
           />
           <Button className="subscribe-button" handleClick={(e) => handleClick(e)}>
             Subscribe
