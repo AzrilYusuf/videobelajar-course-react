@@ -3,7 +3,15 @@ export interface InputProps {
   id?: string;
   type: string;
   name: string;
-  inputMode?: "email" | "search" | "text" | "numeric" | "none" | "tel" | "url" | "decimal";
+  inputMode?:
+    | "email"
+    | "search"
+    | "text"
+    | "numeric"
+    | "none"
+    | "tel"
+    | "url"
+    | "decimal";
   className?: string;
   style?: React.CSSProperties;
   placeholder?: string;
@@ -43,7 +51,15 @@ export interface FormTypes {
   id?: string;
   inputType: string;
   inputName: string;
-  inputMode?: "email" | "search" | "text" | "numeric" | "none" | "tel" | "url" | "decimal";
+  inputMode?:
+    | "email"
+    | "search"
+    | "text"
+    | "numeric"
+    | "none"
+    | "tel"
+    | "url"
+    | "decimal";
   isSelect?: boolean;
   toggleHide?: boolean;
   placeholder?: string;
@@ -58,6 +74,11 @@ export interface FooterList {
   pChildren: React.ReactNode;
   id: string;
   ulChildren: React.ReactNode;
+}
+
+export interface ConfirmToastProps {
+  questionText: string;
+  handleConfirm: () => void;
 }
 
 // Used in organism
