@@ -1,33 +1,33 @@
-import PropTypes from 'prop-types';
-import { useNavigate, useRouteError } from 'react-router-dom';
-import Button from '../components/elements/Button';
+import { useNavigate, useRouteError } from "react-router-dom";
+import Button from "../components/atoms/Button";
 
-const ErrorPage = ({ titleMessage = 'Sorry, an unexpected error has occurred.', message }) => {
-	const navigate = useNavigate();
-	const error = useRouteError();
-	console.error(error);
+const ErrorPage = ({
+  titleMessage = "Sorry, an unexpected error has occurred.",
+  message,
+}: {
+  titleMessage: string;
+  message: string;
+}) => {
+  const navigate = useNavigate();
+  const error = useRouteError() as { statusText?: string; message?: string };
+  console.error(error);
 
-	return (
-		<div id='error-page'>
-			<h1>Oops!</h1>
-			<p>{titleMessage}</p>
-			<p>
-				<i>{error?.statusText || error?.message || message}</i>
-			</p>
-			<Button
-				handleClick={() => {
-					navigate('/home');
-				}}
-			>
-				back
-			</Button>
-		</div>
-	);
-}
-
-ErrorPage.propTypes = {
-	titleMessage: PropTypes.string,
-	message: PropTypes.string,
+  return (
+    <div id="error-page">
+      <h1>Oops!</h1>
+      <p>{titleMessage}</p>
+      <p>
+        <i>{error?.statusText || error?.message || message}</i>
+      </p>
+      <Button
+        handleClick={() => {
+          navigate("/");
+        }}
+      >
+        back
+      </Button>
+    </div>
+  );
 };
 
 export default ErrorPage;
