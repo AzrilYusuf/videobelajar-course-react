@@ -28,4 +28,6 @@ export interface AdminStoreState {
   allUsers: UserData[];
   setAllAdmins: (data: UserData[]) => void;
   setAllUsers: (data: UserData[]) => void;
+  removeAdmin: (userId: number) => void;
+  removeUser: (userId: number) => void;
 }

@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
 import InputForm from "../../../components/molecules/input-form/InputForm";
+import Button from "../../../components/atoms/Button";
+import ConfirmToast from "../../../components/molecules/confirm-toast/ConfirmToast";
+import { toast, ToastPosition } from "react-toastify";
+import {
+  getCustomToastConfig,
+  getDefaultToastConfig,
+} from "../../../utils/toastStyleConfig.ts";
 import {
   getAllUsers,
   createUser,
@@ -7,9 +14,8 @@ import {
   getUserByFullname,
   getUser,
   getUserByEmail,
-  // deleteUser,
+  deleteUser,
 } from "../../../services/user.service";
-import Button from "../../../components/atoms/Button";
 import { useAdminStore } from "../../../stores/adminStore";
 import {
   Role,
@@ -22,7 +28,14 @@ import { AxiosError } from "axios";
 const ManageUsers: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOnEdit, setIsOnEdit] = useState(false);
-  const { allAdmins, allUsers, setAllAdmins, setAllUsers } = useAdminStore();
+  const {
+    allAdmins,
+    allUsers,
+    setAllAdmins,
+    setAllUsers,
+    removeAdmin,
+    removeUser,
+  } = useAdminStore();
   const [usersList, setUsersList] = useState<UserData[]>([]);
   const [values, setValues] = useState<UserRegisterService>({
     id: 0,
@@ -34,6 +47,13 @@ const ManageUsers: React.FC = () => {
   });
   const [error, setError] = useState<string>("");
   const [message, setMessage] = useState<string>("");
+
+  const toastDefault = getDefaultToastConfig();
+  const toastCustom = getCustomToastConfig({
+    position: "top-center" as ToastPosition,
+    autoClose: 5000,
+    closeOnClick: false,
+  });
 
   useEffect(() => {
     setUsersList(allAdmins.concat(allUsers));
@@ -87,7 +107,9 @@ const ManageUsers: React.FC = () => {
         } catch (error) {
           if (error instanceof AxiosError) {
             // Log the error message
-            console.error(error.response?.data?.message || "Failed to update user!");
+            console.error(
+              error.response?.data?.message || "Failed to update user!"
+            );
             setError(error.response?.data?.message || "Failed to update user!");
           } else {
             console.error("An unexpected error occurred: ", error);
@@ -104,7 +126,9 @@ const ManageUsers: React.FC = () => {
               fullname: "",
               email: "",
             });
-            setError("Fullname or Email have already been registered. Please use another one.");
+            setError(
+              "Fullname or Email have already been registered. Please use another one."
+            );
             throw new Error("Fullname or Email have already been registered.");
           } else {
             await createUser(values);
@@ -120,7 +144,9 @@ const ManageUsers: React.FC = () => {
         } catch (error) {
           if (error instanceof AxiosError) {
             // Log the error message
-            console.error(error.response?.data?.message || "Failed to create user!");
+            console.error(
+              error.response?.data?.message || "Failed to create user!"
+            );
             setError(error.response?.data?.message || "Failed to create user!");
           } else {
             // Log the error if it wasn't an AxiosError
@@ -347,12 +373,17 @@ const ManageUsers: React.FC = () => {
                       }
                     } catch (error) {
                       if (error instanceof AxiosError) {
-                        console.error(error.response?.data?.message || "Failed to fetch user data!");
-                        setError(error.response?.data?.message || "Failed to fetch user data!");
+                        console.error(
+                          error.response?.data?.message ||
+                            "Failed to fetch user data!"
+                        );
+                        setError(
+                          error.response?.data?.message ||
+                            "Failed to fetch user data!"
+                        );
                       } else {
                         console.error("An unexpected error occurred: ", error);
                       }
-                      
                     }
                     setIsLoading(false);
                   };
@@ -364,40 +395,53 @@ const ManageUsers: React.FC = () => {
               <Button
                 className="delete-btn"
                 handleClick={() => {
-                  //   toast(
-                  //     <ConfirmToast
-                  //       questionText={
-                  //         isLoading
-                  //           ? "Loading..."
-                  //           : `Are you sure you want to delete ${user.username}?`
-                  //       }
-                  //       handleConfirm={async () => {
-                  //         setIsLoading(true);
-                  //         try {
-                  //           const response = await deleteUser(user.id);
-                  //           console.log(response);
-                  //           user.role !== "admin"
-                  //             ? dispatch(removeUser(user.id))
-                  //             : dispatch(removeAdmin(user.id));
-                  //           toast.dismiss();
-                  //           toast.info(
-                  //             `Delete user with username : ${user.username}`,
-                  //             toastDefault
-                  //           );
-                  //         } catch (error) {
-                  //           console.error(error);
-                  //           toast.error(
-                  //             error.message
-                  //               ? error.message
-                  //               : "Failed to delete user.",
-                  //             toastDefault
-                  //           );
-                  //         }
-                  //         setIsLoading(false);
-                  //       }}
-                  //     />,
-                  //     toastCustom
-                  //   );
+                  toast(
+                    <ConfirmToast
+                    questionText={
+                      isLoading
+                      ? "Loading..."
+                      : `Are you sure you want to delete ${user.fullname}?`
+                    }
+                    handleConfirm={async () => {
+                        console.log("User selected");
+                        setIsLoading(true);
+                        try {
+                          if (!user.id) {
+                            throw new Error("User ID is not found!");
+                          }
+                          const response = await deleteUser(user.id);
+                          console.log(response);
+                          if (user.role === "admin") {
+                            removeAdmin(user.id);
+                          } else {
+                            removeUser(user.id);
+                          }
+                          toast.dismiss();
+                          toast.info(
+                            `Delete user with username : ${user.fullname}`,
+                            toastDefault
+                          );
+                        } catch (error) {
+                          console.error(error);
+                          if (error instanceof AxiosError) {
+                            toast.error(
+                              error.message
+                                ? error.message
+                                : "Failed to delete user.",
+                              toastDefault
+                            );
+                          } else {
+                            toast.error(
+                              "An unexpected error occurred!",
+                              toastDefault
+                            );
+                          }
+                        }
+                        setIsLoading(false);
+                      }}
+                    />,
+                    toastCustom,
+                  );
                 }}
               >
                 Delete
