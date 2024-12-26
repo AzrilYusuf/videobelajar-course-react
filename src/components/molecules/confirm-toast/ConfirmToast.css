@@ -26,27 +26,28 @@
 }
 
 .confirm-toast-button {
-	background-color: #007bff;
+	background-color: hsl(126, 54%, 48%);
 	padding: 0.5em 1.7em;
-	color: white !important;
+	color: hsl(0, 0%, 100%) !important;
 	cursor: pointer;
 }
 
 .confirm-toast-button:hover {
-	background-color: #0056b3;
+	background-color: hsla(120, 67%, 65%, 1);
 }
 
 .confirm-toast-cancel-button {
 	background-color: transparent;
-	box-shadow: 0 0 0 1px #f44336;
+	box-shadow: 0 0 0 1px hsla(11, 92%, 55%, 1);
 	padding: 0.5em 1.7em;
 	cursor: pointer;
 }
 
 .confirm-toast-cancel-button:hover {
-	background-color: #f44336;
+	background-color: hsla(10, 75%, 49%, 1);
+	color: hsl(0, 0%, 100%) !important;
 }
 
 .confirm-toast-cancel-button:active {
-	color: white !important;
+	color: hsl(0, 0%, 100%) !important;
 }
