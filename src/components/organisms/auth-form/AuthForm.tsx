@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
 import TitleForm from "../../molecules/title-form/TitleForm";
 import InputForm from "../../molecules/input-form/InputForm";
 import AuthButton from "../../molecules/auth-button/AuthButton";
@@ -8,14 +9,13 @@ import {
 } from "../../../interfaces/component.interface.tsx";
 import { Role, UserRegisterService } from "../../../interfaces/service.interface.ts";
 import { useUserStore } from "../../../stores/userStore.ts";
-import "./AuthForm.css";
 import {
   getUserByEmail,
   createUser,
   getUser,
   getUserByFullname,
 } from "../../../services/user.service.ts";
-import { AxiosError } from "axios";
+import "./AuthForm.css";
 
 const AuthForm: React.FC<{ title: string }> = ({ title }) => {
   const [values, setValues] = useState<UserRegisterService>({

@@ -5,11 +5,11 @@ import Logo from "../../components/molecules/logo/Logo.tsx";
 import Dashboard from "./menu/Dashboard";
 import ManageUsers from "./menu/ManageUsers.tsx";
 import ErrorPage from "../ErrorPage";
+import useWindowWidth from "../../hooks/useWindowWidth";
 import { getAllUsers } from "../../services/user.service";
 import { useUserStore } from "../../stores/userStore.ts";
 import { useAdminStore } from "../../stores/adminStore.ts";
 import { UserData } from "../../interfaces/store.interface.ts";
-import useWindowWidth from "../../hooks/useWindowWidth";
 import "./AdminDashboard.css";
 
 const AdminDashboard: React.FC = () => {
