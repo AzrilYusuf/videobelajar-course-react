@@ -327,7 +327,7 @@ const ManageUsers: React.FC = () => {
       </form>
       <h3>USERS LIST</h3>
       <ul>
-        <li>
+        <li className="table-header">
           <p>ID</p>
           <p>USERNAME</p>
           <div className="button-wrapper">
@@ -338,7 +338,7 @@ const ManageUsers: React.FC = () => {
         {usersList?.map((user) => (
           <li key={user.id}>
             <p>{user.id}</p>
-            <p style={{ color: user.role === "admin" ? "yellow" : "white" }}>
+            <p style={{ color: user.role === "admin" ? "hsl(126, 54%, 48%)" : "black" }}>
               {user.fullname}
             </p>
             {user.role === "admin" && (

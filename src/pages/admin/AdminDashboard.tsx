@@ -63,7 +63,11 @@ const AdminDashboard: React.FC = () => {
         message={"The requested URL was not found"}
       />
     );
-  if (role === "admin" && typeof windowWidth === "number" && windowWidth < 992) {
+  if (
+    role === "admin" &&
+    typeof windowWidth === "number" &&
+    windowWidth < 992
+  ) {
     return (
       <ErrorPage
         titleMessage={"Display issues"}
@@ -81,19 +85,32 @@ const AdminDashboard: React.FC = () => {
         </div>
         <div onClick={() => navigate("/user?tab=profile")}>
           <i className="bi bi-person-fill-gear" />
-          <p style={{ display: "inline", marginLeft: "5px", color: "white" }}>
+          <p
+            style={{
+              display: "inline",
+              marginLeft: "5px",
+              color: "hsl(0, 0%, 13%)",
+            }}
+          >
             {fullname}
           </p>
         </div>
         <div
           onClick={() => navigate("/admin?tab=dashboard")}
-          style={{ backgroundColor: tab === "dashboard" ? "gray" : undefined }}
-        >
+          style={{
+            backgroundColor:
+              tab === "dashboard" ? "hsl(40, 100%, 61%)" : undefined,
+            color: tab === "dashboard" ? "hsl(0, 0%, 100%)" : undefined,
+          }}
+          >
           Dashboard
         </div>
         <div
           onClick={() => navigate("/admin?tab=users")}
-          style={{ backgroundColor: tab === "users" ? "gray" : undefined }}
+          style={{
+            backgroundColor: tab === "users" ? "hsl(40, 100%, 61%)" : undefined,
+            color: tab === "users" ? "hsl(0, 0%, 100%)" : undefined,
+          }}
         >
           Users
         </div>
